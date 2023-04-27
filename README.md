@@ -17,9 +17,9 @@
 
 <p align="center">
 	<a href="#about">About</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-	<a href="#installation-and-usage">Installation and Usage</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+	<a href="#installation">Installation</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
 	<a href="#contributions">Contributions</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-	<a href="supported-languages">Supported Languages</a>
+	<a href="#credits">Credits</a>
 </p>
 
 <!-- This is intentional to create blank space -->
@@ -33,15 +33,15 @@ Github - https://github.com/GetSimpleCMS/GetSimpleCMS
 
 GetSimple CMS was developed by Chris Cagle [ http://chriscagle.me ]. It is now passionately supported and developed by a loving community.
 
-## Requirements
+## Installation
+
+Please see: http://get-simple.info/docs/installation
+
+#### Requirements
 
 - PHP version 7.4 or later
 - PHP Extensions: SimpleXML, xml, json, dom, curl, gd
 - Apache Web Server - Required for out of the box security using .htaccess
-
-## Installation
-
-Please see: http://get-simple.info/docs/installation
 
 ---
 
@@ -64,7 +64,6 @@ If you find a bug or security hole, please contact someone in the forums at http
 
 
 ## Credits
------------------------------------
 
 ### TEAM ###
 
