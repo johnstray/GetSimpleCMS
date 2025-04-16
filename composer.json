@@ -1,0 +1,29 @@
+{
+    "name": "johnstray/getsimple-cms",
+    "description": "A simple, easy to use Flat-File Content Management System for building awesome small to medium websites",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "GetSimpleCMS\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "John Stray",
+            "email": "johnstray@getsimple.info"
+        }
+    ],
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "squizlabs/php_codesniffer": "*",
+        "phpcompatibility/php-compatibility": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+    },
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

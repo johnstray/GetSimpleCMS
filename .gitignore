@@ -7,3 +7,5 @@
 
 thumbs.db
 .DS_*
+
+/vendor/
