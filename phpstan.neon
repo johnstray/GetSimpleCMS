@@ -6,3 +6,5 @@ parameters:
         - admin/template/
         - admin/lang/
     ignoreErrors:
+        -
+            identifier: variable.undefined

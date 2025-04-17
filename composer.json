@@ -18,7 +18,8 @@
         "phpstan/phpstan": "^2.1",
         "squizlabs/php_codesniffer": "*",
         "phpcompatibility/php-compatibility": "*",
-        "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "phpmd/phpmd": "@stable"
     },
     "prefer-stable": true,
     "config": {

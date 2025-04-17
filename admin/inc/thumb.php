@@ -1,5 +1,5 @@
 <?php
-include('common.php');
+require 'common.php';
 login_cookie_check();
 
 /**
@@ -66,60 +66,60 @@ $crop = null;
 $to_name = '';
 
 if (isset($_REQUEST['f'])) {
-  $save_to_file = intval($_REQUEST['f']) == 1;
+    $save_to_file = intval($_REQUEST['f']) == 1;
 }
 
 if (isset($_REQUEST['src'])) {
-  $from_name = str_replace('../','', urldecode($_REQUEST['src']));
+    $from_name = str_replace('../', '', urldecode($_REQUEST['src']));
 }
 else {
-  die("Source file name must be specified.");
+    die("Source file name must be specified.");
 }
 
 if (isset($_REQUEST['dest'])) {
-  $to_name = str_replace('../','', urldecode($_REQUEST['dest']));
+    $to_name = str_replace('../', '', urldecode($_REQUEST['dest']));
 }
 
 if ($save_to_file && (!isset($to_name) || empty($to_name))) {
-  die("Thumbnail file name must be specified.");
+    die("Thumbnail file name must be specified.");
 }
 
 if (isset($_REQUEST['q'])) {
-  $image_quality = intval($_REQUEST['q']);
+    $image_quality = intval($_REQUEST['q']);
 }
 
 if (isset($_REQUEST['t'])) {
-  $image_type = $_REQUEST['t'];
+    $image_type = $_REQUEST['t'];
 }
 
 if (isset($_REQUEST['x'])) {
-  $max_x = intval($_REQUEST['x']);
+    $max_x = intval($_REQUEST['x']);
 }
 
 if (isset($_REQUEST['y'])) {
-  $max_y = intval($_REQUEST['y']);
+    $max_y = intval($_REQUEST['y']);
 }
 
 // allow w&h instead of x&y (which are confusing)
 if (isset($_REQUEST['w'])) {
-  $max_x = intval($_REQUEST['w']);
+    $max_x = intval($_REQUEST['w']);
 }
 
 if (isset($_REQUEST['h'])) {
-  $max_y = intval($_REQUEST['h']);
+    $max_y = intval($_REQUEST['h']);
 }
 
-if(isset($_REQUEST['c'])){
-	$crop = intval($_REQUEST['c']);
+if(isset($_REQUEST['c'])) {
+    $crop = intval($_REQUEST['c']);
 }
 
 // @todo cuts not implemented
 if (isset($_REQUEST['ox'])) {
-  $cut_x = intval($_REQUEST['ox']);
+    $cut_x = intval($_REQUEST['ox']);
 }
 
 if (isset($_REQUEST['oy'])) {
-  $cut_y = intval($_REQUEST['oy']);
+    $cut_y = intval($_REQUEST['oy']);
 }
 
 $path_parts = pathinfo($from_name);
@@ -155,7 +155,7 @@ if(isset($_REQUEST['debug']) || isset($_REQUEST['json'])){
 // header('Content-Disposition: Attachment;filename='.$outfile);
 $image = generate_thumbnail($file, $sub_path, $outfile, $max_x, $max_y, $crop, $image_quality, $show = true, $image_type);
 
-if(isset($_REQUEST['debug']) || isset($_REQUEST['json'])){
+if(isset($_REQUEST['debug']) || isset($_REQUEST['json'])) {
     $output = ob_get_contents(); // get the image as a string in a variable
     ob_end_clean(); //Turn off output buffering and clean it
     header("Content-Type: text/json");

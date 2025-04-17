@@ -1,4 +1,5 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if(!defined('IN_GS')) { die('you cannot load this page directly.');
+}
 /**
  * Page Functions
  *
@@ -6,10 +7,10 @@
  * 
  * @since  3.4
  * @author shawn_a
- * @todo  create wiki docs
- * @link http://get-simple.info/docs/pages
+ * @todo   create wiki docs
+ * @link   http://get-simple.info/docs/pages
  *
- * @package GetSimple
+ * @package    GetSimple
  * @subpackage Page-Functions
  */
 
@@ -17,19 +18,22 @@
 /**
  * get PAGES
  * optionally PAGES collection , by filtering with provided filterfunction
- * @todo  should return reference to reduce memory usage and copying
+ *
+ * @todo   should return reference to reduce memory usage and copying
  * @since  3.4
  * @param  callable $filterFunc function name for filter callout
  * @param  mixed ... variable number of arguments to pass to filterfunc
  * @return array  new pagesarray
  */
-function getPages($filterFunc=null/*,...*/){
-	$pagesArray = getPagesXmlValues();
-	if(isset($filterFunc) && function_exists($filterFunc)){
-		$args    = func_get_args();
-		$args[0] = $pagesArray; // replace first argument (filterfunc) with PAGES
-		return call_user_func_array($filterFunc, $args); // @todo why not call filterPageFunc() ?
-	} else return $pagesArray;
+function getPages($filterFunc=null/*,...*/)
+{
+    $pagesArray = getPagesXmlValues();
+    if(isset($filterFunc) && function_exists($filterFunc)) {
+        $args    = func_get_args();
+        $args[0] = $pagesArray; // replace first argument (filterfunc) with PAGES
+        return call_user_func_array($filterFunc, $args); // @todo why not call filterPageFunc() ?
+    } else { return $pagesArray;
+    }
 }
 
 /**
@@ -39,9 +43,10 @@ function getPages($filterFunc=null/*,...*/){
  * @param  string $slug slug of page to return
  * @return array       page array
  */
-function getPage($slug){
-	$pagesArray = getPagesXmlValues();
-	return isset($pagesArray[$slug]) ? $pagesArray[$slug] : null;
+function getPage($slug)
+{
+    $pagesArray = getPagesXmlValues();
+    return isset($pagesArray[$slug]) ? $pagesArray[$slug] : null;
 }
 
 /**
@@ -170,81 +175,96 @@ function getPageMenuTitle($slug){
 /**
  * get PAGE parent slug
  * alias for $pagesArray['slug']['parent']
+ *
  * @param  str $pageId slug of PAGE to get parent of
  * @return str         parent id of this page
  */
-function getParent($pageId){
-	$parentId  = returnPageField($pageId,'parent');
-	return (string) $parentId;
+function getParent($pageId)
+{
+    $parentId  = returnPageField($pageId, 'parent');
+    return (string) $parentId;
 }
 
 /**
  * get PAGE parent PAGE
  * alias for $pagesArray[$pagesArray['slug']['parent']]
+ *
  * @param  str $pageId slug of PAGE to get path for
  * @return str         parent PAGE object
  */
-function getParentPage($pageId){
-	$parentId = getParent($pageId);
-	return getPage($parentId);
+function getParentPage($pageId)
+{
+    $parentId = getParent($pageId);
+    return getPage($parentId);
 }
 
 /**
  * get PAGE parents slugs
  * returns an array of all this pages parents slugs
+ *
  * @param  str $pageId slug of child
  * @return array       array of parents slugs
  */
-function getParents($pageId){
+function getParents($pageId)
+{
 
-	// return getParentFields($pageId,'id'); // @todo not working
+    // return getParentFields($pageId,'id'); // @todo not working
 
-	$pageparents = getPagesFields('parent');
-	$parent      = getParent($pageId);
-	$parents     = array();
+    $pageparents = getPagesFields('parent');
+    $parent      = getParent($pageId);
+    $parents     = array();
 
-	if(empty($parent)) return array();
+    if(empty($parent)) { return array();
+    }
 
-	$parents[] = $parent;
+    $parents[] = $parent;
 
-	while(isset($pageparents[$parent])){
-		$parent    = (string)$pageparents[$parent];
-		if(!empty($parent))	$parents[] = $parent;
-	}
-	return $parents;
+    while(isset($pageparents[$parent])){
+        $parent    = (string)$pageparents[$parent];
+        if(!empty($parent)) { $parents[] = $parent;
+        }
+    }
+    return $parents;
 }
 
 
 /**
  * get PAGE parents fields
  * returns an 1D array of a pages parents field values
- * @param  str $pageId slug of child
- * @param  str $key    key of field to return from parents
+ *
+ * @param  str $pageId     slug of child
+ * @param  str $key        key of field to return from parents
  * @param  str $filterfunc optional function
  * @return array       array of parents fields
  */
-function getParentFields($pageId,$key = 'url',$filterFunc = null){
-	$resArray = array();
-	$parents = getParents($pageId);
-	if(!$parents) return;
-	foreach($parents as $parent){
-		$value = ($key == 'url') ? $parent : getPageFieldValue($parent,$key); // optimize if we are asking for parent slugs, we already have them
-		if(callIfCallable($filterFunc,$parent,$key) !== true) $resArray[] = $value;
-	}
+function getParentFields($pageId,$key = 'url',$filterFunc = null)
+{
+    $resArray = array();
+    $parents = getParents($pageId);
+    if(!$parents) { return;
+    }
+    foreach($parents as $parent){
+        $value = ($key == 'url') ? $parent : getPageFieldValue($parent, $key); // optimize if we are asking for parent slugs, we already have them
+        if(callIfCallable($filterFunc, $parent, $key) !== true) { $resArray[] = $value;
+        }
+    }
 
-	return $resArray;
+    return $resArray;
 }
 
 /**
  * get all page parent pages
  * returns an array of all this pages parents page-arrays
+ *
  * @param  str $pageId slug of child
  * @return array       PAGES collection of parents
  */
-function getParentsPages($pageId){
-	$parents = getParents($pageId);
-	if(!$parents) return array();
-	return getPagesMulti($parents,true);
+function getParentsPages($pageId)
+{
+    $parents = getParents($pageId);
+    if(!$parents) { return array();
+    }
+    return getPagesMulti($parents, true);
 }
 
 
@@ -325,13 +345,16 @@ function getChildrenPages($pageId){
 
 /**
  * get PAGE path
+ *
  * @param  str $pageId slug of PAGE to get path to
  * @return str         path/to/pageId
  */
-function getPagePath($pageId){
-	$parents = getParents($pageId);
-	if($parents) return implode('/',array_reverse($parents)) . '/' . $pageId;
-	return $pageId;
+function getPagePath($pageId)
+{
+    $parents = getParents($pageId);
+    if($parents) { return implode('/', array_reverse($parents)) . '/' . $pageId;
+    }
+    return $pageId;
 }
 
 /**
@@ -340,15 +363,18 @@ function getPagePath($pageId){
  * parent field - parent field - page field
  * eg. getPagePathField($parent,'title'),' - ')
  * output: parent 1 title - parent 2 title
+ *
  * @param  str $pageId slug of page
  * @param  str $field  field name
  * @param  str $delim  delimiter for implode
  * @return str         concatenated string of parent fields
  */
-function getPagePathField($pageId,$field,$delim = '/'){
-	$parents = getParentFields($pageId,$field);
-	if($parents) return implode('/',array_reverse($parents)) . $delim . getPageFieldValue($pageId,$field);
-	return $pageId;
+function getPagePathField($pageId,$field,$delim = '/')
+{
+    $parents = getParentFields($pageId, $field);
+    if($parents) { return implode('/', array_reverse($parents)) . $delim . getPageFieldValue($pageId, $field);
+    }
+    return $pageId;
 }
 
 /**

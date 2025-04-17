@@ -1,4 +1,5 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if(!defined('IN_GS')) { die('you cannot load this page directly.');
+}
 /**
  * Theme Functions
  *
@@ -6,7 +7,7 @@
  *
  * @link http://get-simple.info/docs/theme-codex/
  *
- * @package GetSimple
+ * @package    GetSimple
  * @subpackage Theme-Functions
  */
 
@@ -228,14 +229,15 @@ function get_page_clean_title($echo=true) {
  * This will return the slug value of a particular page
  *
  * @since 1.0
- * @uses $url
+ * @uses  $url
  *
- * @param bool $echo Optional, default is true. False will 'return' value
+ * @param  bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_page_slug($echo=true) {
-	$str = exec_filter('pageslug',getGSPageVar('url')); // @filter pageslug (str) page slug in get_pagee_slug
- 	return echoReturn($str,$echo);
+function get_page_slug($echo=true)
+{
+    $str = exec_filter('pageslug', getGSPageVar('url')); // @filter pageslug (str) page slug in get_pagee_slug
+    return echoReturn($str, $echo);
 }
 
 /**
@@ -245,11 +247,12 @@ function get_page_slug($echo=true) {
  *
  * @since 1.0
  *
- * @param bool $echo Optional, default is true. False will 'return' value
+ * @param  bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_parent($echo=true) {
-	return echoReturn(getGSPageVar('parent'),$echo);
+function get_parent($echo=true)
+{
+    return echoReturn(getGSPageVar('parent'), $echo);
 }
 
 /**
@@ -352,22 +355,25 @@ function build_header($full){
  * Also gets all frontend scripts set to footer
  *
  * @since 2.0
- * @uses exec_action
+ * @uses  exec_action
  *
  * @return string HTML for template header
  */
-function get_footer() {
-	get_scripts_frontend(true);
-	exec_action('theme-footer');  // @hook theme-footer after get_footer html output
+function get_footer()
+{
+    get_scripts_frontend(true);
+    exec_action('theme-footer');  // @hook theme-footer after get_footer html output
 }
 
 
 /**
  * Get Styles Frontend
+ *
  * @since 3.1
  */
-function get_styles_frontend(){
-  echo getStyles(GSFRONT);
+function get_styles_frontend()
+{
+    echo getStyles(GSFRONT);
 }
 
 /**
@@ -376,8 +382,9 @@ function get_styles_frontend(){
  * @since 3.1 *
  * @param boolean $footer Load only script with footer flag set
  */
-function get_scripts_frontend($footer = false){
-  echo getScripts(GSFRONT,$footer);
+function get_scripts_frontend($footer = false)
+{
+    echo getScripts(GSFRONT, $footer);
 }
 
 
@@ -388,13 +395,14 @@ function get_scripts_frontend($footer = false){
  * This is the value set in the control panel
  *
  * @since 1.0
- * @uses $SITEURL
+ * @uses  $SITEURL
  *
- * @param bool $echo Optional, default is true. False will 'return' value
+ * @param  bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_site_url($echo=true) {
-	return echoReturn(getGSPageVar('SITEURL'),$echo);
+function get_site_url($echo=true)
+{
+    return echoReturn(getGSPageVar('SITEURL'), $echo);
 }
 
 /**
@@ -421,14 +429,15 @@ function get_theme_url($echo=true) {
  * This will return the value set in the control panel
  *
  * @since 1.0
- * @uses $SITENAME
+ * @uses  $SITENAME
  *
- * @param bool $echo Optional, default is true. False will 'return' value
+ * @param  bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_site_name($echo=true) {
-	global $SITENAME;
-	return echoReturn(cl($SITENAME),$echo);
+function get_site_name($echo=true)
+{
+    global $SITENAME;
+    return echoReturn(cl($SITENAME), $echo);
 }
 
 /**
@@ -438,16 +447,17 @@ function get_site_name($echo=true) {
  * 
  * @deprecated as of 3.0
  *
- * @since 1.0
+ * @since  1.0
  * @global $SITEEMAIL
  *
- * @param bool $echo Optional, default is true. False will 'return' value
+ * @param  bool $echo Optional, default is true. False will 'return' value
  * @return string Echos or returns based on param $echo
  */
-function get_site_email($echo=true) {
-	global $SITEEMAIL;
-	$str = trim(stripslashes($SITEEMAIL));
-	return echoReturn($str,$echo);
+function get_site_email($echo=true)
+{
+    global $SITEEMAIL;
+    $str = trim(stripslashes($SITEEMAIL));
+    return echoReturn($str, $echo);
 }
 
 
@@ -613,46 +623,53 @@ function return_component(){
  *
  * @since 3.4
  *
- * @param string $id This is the ID of the snippet you want to display
- * @param bool $force Force return of inactive snippets
- * @param bool $raw do not process php
+ * @param string $id    This is the ID of the snippet you want to display
+ * @param bool   $force Force return of inactive snippets
+ * @param bool   $raw   do not process php
  */
-function get_snippet($id, $force = false) {
-	output_collection_item($id, get_snippets_xml(), $force, true);
+function get_snippet($id, $force = false)
+{
+    output_collection_item($id, get_snippets_xml(), $force, true);
 }
 
 /**
  * See if a snippet exists
- * @since 3.4
- * @param  str $id snippet id
+ *
+ * @since  3.4
+ * @param  str                                     $id snippet id
  * @param  bool disabled include disabled snippets
  * @return bool
  */
-function snippet_exists($id, $disabled = false){
-	if(!$disabled) return snippetIsEnabled($id);
-	return (bool)get_snippet_xml($id);
+function snippet_exists($id, $disabled = false)
+{
+    if(!$disabled) { return snippetIsEnabled($id);
+    }
+    return (bool)get_snippet_xml($id);
 }
 
 /**
  * See if a snippet is enabled
- * @since 3.4
+ *
+ * @since  3.4
  * @param  str $id snippet id
  * @return bool
  */
-function snippet_enabled($id){
-	return snippetIsEnabled($id);
+function snippet_enabled($id)
+{
+    return snippetIsEnabled($id);
 }
 
 /**
  * Return snippet
  * Returns a snippets output
  *
- * @since 3.4
+ * @since  3.4
  * @return snippet buffered output
  */
-function return_snippet(){
-	$args = func_get_args();
-	return catchOutput('get_snippet',$args);
+function return_snippet()
+{
+    $args = func_get_args();
+    return catchOutput('get_snippet', $args);
 }
 
 /**

@@ -262,55 +262,57 @@ function read_pluginsxml($data = null){
  * read_pluginsxml() is called to populate $live_plugins
  *
  * Does nothing if force is false and no file diff found
- * @todo  if this gets called before live plugins is loaded it will wipe your activated plugin state
+ *
+ * @todo if this gets called before live plugins is loaded it will wipe your activated plugin state
  *
  * @since 2.04
- * @uses $live_plugins
+ * @uses  $live_plugins
  *
- * @param  bool $force force an update of plugins.xml regardless of diff check
- *
+ * @param bool $force force an update of plugins.xml regardless of diff check
  */
-function create_pluginsxml($force=false){
-	GLOBAL $live_plugins;
+function create_pluginsxml($force=false)
+{
+    GLOBAL $live_plugins;
 
-	$pluginfiles = array();
-	$success     = false;
+    $pluginfiles = array();
+    $success     = false;
 
-	if (file_exists(GSPLUGINPATH)){
-		$pluginfiles = getFiles(GSPLUGINPATH,'php');
-	}
-	else return; // plugin files path issue
+    if (file_exists(GSPLUGINPATH)) {
+        $pluginfiles = getFiles(GSPLUGINPATH, 'php');
+    }
+    else { return; // plugin files path issue
+    }
 
-	if (!$force) {
-		$livekeys = array_keys($live_plugins);
-		// check for file diff and use force to regen if count differs @todo better detection than just count
-		if (count(array_diff($livekeys, $pluginfiles))>0 || count(array_diff($pluginfiles, $livekeys))>0) {
-	  		$force = true;
-		}
-	}
+    if (!$force) {
+        $livekeys = array_keys($live_plugins);
+        // check for file diff and use force to regen if count differs @todo better detection than just count
+        if (count(array_diff($livekeys, $pluginfiles))>0 || count(array_diff($pluginfiles, $livekeys))>0) {
+            $force = true;
+        }
+    }
 
-	// create plugins.xml if missing or updating
-	if ($force) {
-		$xml = @new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><channel></channel>');
-		foreach ($pluginfiles as $fi) {
-			$plugins = $xml->addChild('item');
-			$p_note  = $plugins->addChild('plugin');
-			$p_note->addCData($fi);
-			$p_note  = $plugins->addChild('enabled');
+    // create plugins.xml if missing or updating
+    if ($force) {
+        $xml = @new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><channel></channel>');
+        foreach ($pluginfiles as $fi) {
+            $plugins = $xml->addChild('item');
+            $p_note  = $plugins->addChild('plugin');
+            $p_note->addCData($fi);
+            $p_note  = $plugins->addChild('enabled');
 
-			// check live_plugins and set enables
-			if (isset($live_plugins[(string)$fi])){
-				$p_note->addCData($live_plugins[(string)$fi]);
-			} else {
-				$p_note->addCData('false');
-			}
-		}
+            // check live_plugins and set enables
+            if (isset($live_plugins[(string)$fi])) {
+                $p_note->addCData($live_plugins[(string)$fi]);
+            } else {
+                $p_note->addCData('false');
+            }
+        }
 
-		$success = XMLsave($xml, GSDATAOTHERPATH.getDef('GSPLUGINSFILE'));
-		read_pluginsxml($xml);
-	}
+        $success = XMLsave($xml, GSDATAOTHERPATH.getDef('GSPLUGINSFILE'));
+        read_pluginsxml($xml);
+    }
 
-	return $success;
+    return $success;
 }
 
 /**
@@ -557,27 +559,30 @@ function remove_secfilter($filter_name,$hook_function){
  * Allows changing of the passed variable
  *
  * @since 2.0
- * @uses $filters
+ * @uses  $filters
  *
  * @param string $script Filter name to execute
- * @param array $data
+ * @param array  $data
  */
-function exec_secfilter($filter_name, $result = true) {
-	global $secfilters,$securityFilters;
-	$args      = prepareHookExecArgs($args = func_get_args());
- 	$newresult = exec_hook($secfilters, $securityFilters, $filter_name, 'exec_secfilter_callback', $args, 'exec_secfilter_complete');
- 	return is_bool($newresult) ? $newresult : $result;
+function exec_secfilter($filter_name, $result = true)
+{
+    global $secfilters,$securityFilters;
+    $args      = prepareHookExecArgs($args = func_get_args());
+    $newresult = exec_hook($secfilters, $securityFilters, $filter_name, 'exec_secfilter_callback', $args, 'exec_secfilter_complete');
+    return is_bool($newresult) ? $newresult : $result;
 }
 
-function exec_secfilter_callback($hook,&$data=array()){
-	$result    = &$data[0]; // last result or exec result reference
-	$args      = prepareHookCallbackArgs($hook,$data);
-	$newresult = call_user_func_array($hook['function'], $args);
-	$result    = is_bool($newresult) ? $newresult : $result;
+function exec_secfilter_callback($hook,&$data=array())
+{
+    $result    = &$data[0]; // last result or exec result reference
+    $args      = prepareHookCallbackArgs($hook, $data);
+    $newresult = call_user_func_array($hook['function'], $args);
+    $result    = is_bool($newresult) ? $newresult : $result;
 }
 
-function exec_secfilter_complete($data=array()){
-	return $data[0];
+function exec_secfilter_complete($data=array())
+{
+    return $data[0];
 }
 
 

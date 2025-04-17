@@ -166,56 +166,57 @@ $GS_definitions = array(
 		solarized dark,
 		textarea
 	',
-	'GSPAGETABS'           => true,                           // (bool) use tabbed interface for page edit
-	'GSCOMPSORTSAVE'       => true,                           // (bool) sort collections by title on save
-	'GSEDITNAVCLONE'       => false,                          // (bool) show clone edit nav on page edit
-	'GSEDITNAVVIEW'        => true,                           // (bool) show view edit nav on page edit
-	'GSNOHIGHLIGHT'        => false,                          // (bool) disabled code mirror
-	# DRAFTS -------------------------------------------------------------------------------------------------------------------------------------------
-	'GSUSEDRAFTS'          => false,                          // (bool) use page drafts
-	'GSUSEPAGESTACK'       => true,                           // (bool) use page stacks for drafts, else manually pass `nodraft` or `draft` qs
-	'GSDRAFTSTACKDEFAULT'  => false,                          // (bool) default page stack editing to drafts if true
-	'GSSDRAFTSPUBLISHEDTAG'=> true,                           // (bool) show published label on non draft pages if true
-	'GSAUTOSAVE'           => true,                           // (bool) auto save enabled, disabled if false, only used for drafts currently
-	'GSAUTOSAVEINTERVAL'   => 6,                              // (int)  auto save interval in seconds,  only used for drafts currently
-	# IMAGES -------------------------------------------------------------------------------------------------------------------------------------------
-	'GSIMAGEWIDTH'         => 200,                            // (int) thumbnail size
-	'GSTHUMBSMWIDTH'       => 80,                             // (int) thumbsm max height
-	'GSTHUMBSMHEIGHT'      => 160,                            // (int) thumbsm max width
-	'GSTHUMBSSHOW'         => true,                           // (bool) always show thumbnails
-	# DEBUGGING ----------------------------------------------------------------------------------------------------------------------------------------
-	'GSDEBUGINSTALL'       => false,                          // (bool) debug installs, prevent removal of installation files (install,setup,update)
-	'GSDEBUGINSTALLWIPE'   => false,                          // (bool) debug installs, wipes website.xml on logouts
-	'GSDEBUG'              => true,                           // (bool) output debug mode console
-	'GSDEBUGAPI'           => false,                          // (bool) debug api calls to debuglog
-	'GSDEBUGREDIRECTS'     => false,                          // (bool) if debug mode enabled, prevent redirects for debugging
-	'GSDEBUGFILEIO'        => false,                          // (bool) debug filio operations
-	'GSDEBUGHOOKS'         => false,                          // (bool) debug hooks, adds callee (file,line,core) to $plugins, always true if DEBUG MODE
-	'GSDEBUGLOGTIME'       => false,                          // (bool) timestamp debuglog str entries
-	'GSDEBUGLOGDUR'        => false,                          // (bool) duration timestamp debuglog str entries
-	'GSDEBUGHEADERS'       => false,                          // (bool) enable header output debugging ( helpful for finding whitespace or headers already sent errors )
-	'GSDEBUGARRAYS'        => false,                          // (bool) will dump all arrays on init for debugging
-	'GSDEBUGPATHS'         => false,                          // (bool) will dump all arrays on init for debugging
-	# INIT ----------------------------------------------------------------------------------------------------------------------------------------------
-	'GSSAFEMODE'           => false,                          // (bool) enable safe mode, safe mode disables plugins and components
-	'GSFORMATXML'          => false,                          // (bool) format xml files before saving them, making them more legible
-	'GSSAFEMODE'           => false,                          // (bool) enable safe mode, safe mode disables plugins and components
-	'GSINITPAGECACHE'      => true,                           // (bool) initPageCache in common, solves issues with lazyload via getPages, or when still using Global $pagesArray
-	'GSUSELEGACYPLUGINS'   => false,                          // (bool) use legacy plugins array for plugin hooks, some features will not work, namely priorities!
-	'GSNOPLUGINCHECK'      => false,                          // (bool) perform no plugin api checks if false, else api checks will be limited to 5 per run(page load)
-	# VARIABLES -----------------------------------------------------------------------------------------------------------------------------------------
-	'GSMETADLEN'           => 160,                            // (int) optional meta description max length enforced
-	'GSBACKUPROOT'         => false,                          // (bool) include all root files in archive backups
-	'GSAUTOMETAD'          => false,                          // (bool) auto generate meta desc from content
-	// 'GSBACKUPEXTRAS'       => '',                          // (str) testing add stuff to backup, only accepts files for now
-	# SANITY --------------------------------------------------------------------------------------------------------------------------------------------
-	# ---------------------------------------------------------------------------------------------------------------------------------------------------
- 	'GSDEFINITIONSLOADED'  => true	                          // (bool) $GS_definitions IS LOADED FLAG
+    'GSPAGETABS'           => true,                           // (bool) use tabbed interface for page edit
+    'GSCOMPSORTSAVE'       => true,                           // (bool) sort collections by title on save
+    'GSEDITNAVCLONE'       => false,                          // (bool) show clone edit nav on page edit
+    'GSEDITNAVVIEW'        => true,                           // (bool) show view edit nav on page edit
+    'GSNOHIGHLIGHT'        => false,                          // (bool) disabled code mirror
+    // DRAFTS -------------------------------------------------------------------------------------------------------------------------------------------
+    'GSUSEDRAFTS'          => false,                          // (bool) use page drafts
+    'GSUSEPAGESTACK'       => true,                           // (bool) use page stacks for drafts, else manually pass `nodraft` or `draft` qs
+    'GSDRAFTSTACKDEFAULT'  => false,                          // (bool) default page stack editing to drafts if true
+    'GSSDRAFTSPUBLISHEDTAG'=> true,                           // (bool) show published label on non draft pages if true
+    'GSAUTOSAVE'           => true,                           // (bool) auto save enabled, disabled if false, only used for drafts currently
+    'GSAUTOSAVEINTERVAL'   => 6,                              // (int)  auto save interval in seconds,  only used for drafts currently
+    // IMAGES -------------------------------------------------------------------------------------------------------------------------------------------
+    'GSIMAGEWIDTH'         => 200,                            // (int) thumbnail size
+    'GSTHUMBSMWIDTH'       => 80,                             // (int) thumbsm max height
+    'GSTHUMBSMHEIGHT'      => 160,                            // (int) thumbsm max width
+    'GSTHUMBSSHOW'         => true,                           // (bool) always show thumbnails
+    // DEBUGGING ----------------------------------------------------------------------------------------------------------------------------------------
+    'GSDEBUGINSTALL'       => false,                          // (bool) debug installs, prevent removal of installation files (install,setup,update)
+    'GSDEBUGINSTALLWIPE'   => false,                          // (bool) debug installs, wipes website.xml on logouts
+    'GSDEBUG'              => true,                           // (bool) output debug mode console
+    'GSDEBUGAPI'           => false,                          // (bool) debug api calls to debuglog
+    'GSDEBUGREDIRECTS'     => false,                          // (bool) if debug mode enabled, prevent redirects for debugging
+    'GSDEBUGFILEIO'        => false,                          // (bool) debug filio operations
+    'GSDEBUGHOOKS'         => false,                          // (bool) debug hooks, adds callee (file,line,core) to $plugins, always true if DEBUG MODE
+    'GSDEBUGLOGTIME'       => false,                          // (bool) timestamp debuglog str entries
+    'GSDEBUGLOGDUR'        => false,                          // (bool) duration timestamp debuglog str entries
+    'GSDEBUGHEADERS'       => false,                          // (bool) enable header output debugging ( helpful for finding whitespace or headers already sent errors )
+    'GSDEBUGARRAYS'        => false,                          // (bool) will dump all arrays on init for debugging
+    'GSDEBUGPATHS'         => false,                          // (bool) will dump all arrays on init for debugging
+    // INIT ----------------------------------------------------------------------------------------------------------------------------------------------
+    'GSSAFEMODE'           => false,                          // (bool) enable safe mode, safe mode disables plugins and components
+    'GSFORMATXML'          => false,                          // (bool) format xml files before saving them, making them more legible
+    'GSSAFEMODE'           => false,                          // (bool) enable safe mode, safe mode disables plugins and components
+    'GSINITPAGECACHE'      => true,                           // (bool) initPageCache in common, solves issues with lazyload via getPages, or when still using Global $pagesArray
+    'GSUSELEGACYPLUGINS'   => false,                          // (bool) use legacy plugins array for plugin hooks, some features will not work, namely priorities!
+    'GSNOPLUGINCHECK'      => false,                          // (bool) perform no plugin api checks if false, else api checks will be limited to 5 per run(page load)
+    // VARIABLES -----------------------------------------------------------------------------------------------------------------------------------------
+    'GSMETADLEN'           => 160,                            // (int) optional meta description max length enforced
+    'GSBACKUPROOT'         => false,                          // (bool) include all root files in archive backups
+    'GSAUTOMETAD'          => false,                          // (bool) auto generate meta desc from content
+    // 'GSBACKUPEXTRAS'       => '',                          // (str) testing add stuff to backup, only accepts files for now
+    // SANITY --------------------------------------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------
+    'GSDEFINITIONSLOADED'  => true                            // (bool) $GS_definitions IS LOADED FLAG
 );
 
 
 // check php env for GSROOTHPATH to allow for symlink GSADMIN etc.
-if(getenv('GSROOTPATH') && !defined('GSROOTPATH')) define('GSROOTPATH',getenv('GSROOTPATH'));
+if(getenv('GSROOTPATH') && !defined('GSROOTPATH')) { define('GSROOTPATH', getenv('GSROOTPATH'));
+}
 
 /* Define Constants */
 GS_defineFromArray($GS_constants);
@@ -250,58 +251,61 @@ global
 $microtime_start = microtime(true);
 $microtime_last = $microtime_start;
 
-if(isset($_GET['nocache'])){
-	// @todo: disables caching, this should probably only be allowed for auth users, it is also not well implemented
-	$nocache = true;
+if(isset($_GET['nocache'])) {
+    // @todo: disables caching, this should probably only be allowed for auth users, it is also not well implemented
+    $nocache = true;
 }
 
 /*
  * If backend Load config, else do front end stuff
  */
-if(!GSBASE){
-	if (file_exists(GSROOTPATH . GSCONFIGFILE)){
-		include_once(GSROOTPATH . GSCONFIGFILE);
-	}
+if(!GSBASE) {
+    if (file_exists(GSROOTPATH . GSCONFIGFILE)) {
+        include_once GSROOTPATH . GSCONFIGFILE;
+    }
 }
 else {
-	$base = GSBASE; // @global $base LEGACY frontend flag DEPRECATED
-	// set loaders, if you want to override these do it your main common wrapper or index.php
-	if(!isset($load['plugin']))   $load['plugin']   = true;   // load plugin system
-	if(!isset($load['template'])) $load['template'] = true; // load template system
-	if(!isset($load['login']))    $load['login']    = false; // load login system
+    $base = GSBASE; // @global $base LEGACY frontend flag DEPRECATED
+    // set loaders, if you want to override these do it your main common wrapper or index.php
+    if(!isset($load['plugin'])) {   $load['plugin']   = true;   // load plugin system
+    }
+    if(!isset($load['template'])) { $load['template'] = true; // load template system
+    }
+    if(!isset($load['login'])) {    $load['login']    = false; // load login system
+    }
 }
 
 /*
  * Apply default definitions
  */
 GS_defineFromArray($GS_definitions);
-$GSADMIN = rtrim(GSADMIN,'/\\'); // global GS admin root folder name
+$GSADMIN = rtrim(GSADMIN, '/\\'); // global GS admin root folder name
 
 /**
  * Define Paths
  */
-define('GSPATH'          , getGSRootPath()                );// /
-define('GSADMINPATH'     , GSPATH          . $GSADMIN.'/'); // admin/
-define('GSADMININCPATH'  , GSADMINPATH     . 'inc/');       // admin/inc/
-define('GSADMINTPLPATH'  , GSADMINPATH     . 'template/');  // admin/template/
-define('GSPLUGINPATH'    , GSROOTPATH      . 'plugins/');   // plugins/
-define('GSLANGPATH'      , GSADMINPATH     . 'lang/');      // lang/
+define('GSPATH', getGSRootPath());// /
+define('GSADMINPATH', GSPATH          . $GSADMIN.'/'); // admin/
+define('GSADMININCPATH', GSADMINPATH     . 'inc/');       // admin/inc/
+define('GSADMINTPLPATH', GSADMINPATH     . 'template/');  // admin/template/
+define('GSPLUGINPATH', GSROOTPATH      . 'plugins/');   // plugins/
+define('GSLANGPATH', GSADMINPATH     . 'lang/');      // lang/
 
 // data
-define('GSDATAPATH'      , GSROOTPATH      . 'data/');      // data/
-define('GSDATAOTHERPATH' , GSDATAPATH      . 'other/');     // data/other/
-define('GSDATAPAGESPATH' , GSDATAPATH      . 'pages/');     // data/pages/
+define('GSDATAPATH', GSROOTPATH      . 'data/');      // data/
+define('GSDATAOTHERPATH', GSDATAPATH      . 'other/');     // data/other/
+define('GSDATAPAGESPATH', GSDATAPATH      . 'pages/');     // data/pages/
 
-define('GSAUTOSAVEPATH'  , GSDATAPAGESPATH . 'autosave/');  // data/pages/autosave/
+define('GSAUTOSAVEPATH', GSDATAPAGESPATH . 'autosave/');  // data/pages/autosave/
 define('GSDATADRAFTSPATH', GSDATAPAGESPATH . 'autosave/');  // data/pages/autosave/
 define('GSDATAUPLOADPATH', GSDATAPATH      . 'uploads/');   // data/uploads/
-define('GSTHUMBNAILPATH' , GSDATAPATH      . 'thumbs/');    // data/thumbs/
-define('GSUSERSPATH'     , GSDATAPATH      . 'users/');     // data/users/
-define('GSCACHEPATH'     , GSDATAPATH      . 'cache/');     // data/cache/
+define('GSTHUMBNAILPATH', GSDATAPATH      . 'thumbs/');    // data/thumbs/
+define('GSUSERSPATH', GSDATAPATH      . 'users/');     // data/users/
+define('GSCACHEPATH', GSDATAPATH      . 'cache/');     // data/cache/
 
-define('GSBACKUPSPATH'   , GSROOTPATH      . 'backups/');   // backups/
-define('GSBACKUSERSPATH' , GSBACKUPSPATH   . 'users/');     // backups/users
-define('GSTHEMESPATH'    , GSROOTPATH      . 'theme/');     // theme/
+define('GSBACKUPSPATH', GSROOTPATH      . 'backups/');   // backups/
+define('GSBACKUSERSPATH', GSBACKUPSPATH   . 'users/');     // backups/users
+define('GSTHEMESPATH', GSROOTPATH      . 'theme/');     // theme/
 
 
 // reserved slug names, slugs named these will interfere with gs folder access
@@ -500,12 +504,12 @@ if (version_compare(PHP_VERSION, "5")  >= 0) {
 header('content-type: text/html; charset=utf-8');
 
 // no-cache headers
-if(!is_frontend()){
-	$timestamp = gmdate("D, d M Y H:i:s") . " GMT";
-	header('Expires: 0'); // Proxies.
-	header("Last-Modified: " . $timestamp);
-	header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-	header('Pragma: no-cache'); // HTTP 1.0.
+if(!is_frontend()) {
+    $timestamp = gmdate("D, d M Y H:i:s") . " GMT";
+    header('Expires: 0'); // Proxies.
+    header("Last-Modified: " . $timestamp);
+    header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
+    header('Pragma: no-cache'); // HTTP 1.0.
 }
 
 /**
@@ -551,31 +555,31 @@ GLOBAL
 // load website data from GSWEBSITEFILE (website.xml)
 extract(getWebsiteData(true));
 
-if(defined("GSDEBUGPATHS") && GSDEBUGPATHS){
-// debugging paths
-debugLog('GSBASE       = ' . GSBASE);
-debugLog('GSROOTPATH   = ' . GSROOTPATH);
-debugLog('GSADMINPATH  = ' . GSADMINPATH);
-debugLog('SITEUSR      = ' . $SITEUSR);
-debugLog('GSSITEURLREL = ' . getDef('GSSITEURLREL',true));
-debugLog('SITEURL      = ' . getSiteURL());
-debugLog('SITEURL_ABS  = ' . getSiteURL(true));
-debugLog('SITEURL_REL  = ' . $SITEURL_REL);
-debugLog('ASSETURL     = ' . $ASSETURL);
-debugLog('ASSETPATH    = ' . $ASSETPATH);
-debugLog('SITELANG     = ' . $SITELANG);
-debugLog('GSLANG       = ' . getDef('GSLANG'));
-// debugDie();
+if(defined("GSDEBUGPATHS") && GSDEBUGPATHS) {
+    // debugging paths
+    debugLog('GSBASE       = ' . GSBASE);
+    debugLog('GSROOTPATH   = ' . GSROOTPATH);
+    debugLog('GSADMINPATH  = ' . GSADMINPATH);
+    debugLog('SITEUSR      = ' . $SITEUSR);
+    debugLog('GSSITEURLREL = ' . getDef('GSSITEURLREL', true));
+    debugLog('SITEURL      = ' . getSiteURL());
+    debugLog('SITEURL_ABS  = ' . getSiteURL(true));
+    debugLog('SITEURL_REL  = ' . $SITEURL_REL);
+    debugLog('ASSETURL     = ' . $ASSETURL);
+    debugLog('ASSETPATH    = ' . $ASSETPATH);
+    debugLog('SITELANG     = ' . $SITELANG);
+    debugLog('GSLANG       = ' . getDef('GSLANG'));
+    // debugDie();
 }
 
 /**
  * Global user data
  *
- * @global  (str) $datau      user xml raw obj from GSUSERSPATH/userid.xml
- * @global  (str) $USR        holds the GS_ADMIN_USERNAME cookie value
- * @global  (str) $HTMLEDITOR htmleditor toggle for auth user
- * @global  (str) $TIMEZONE   timezone for auth user
- * @global  (str) $LANG       language for auth user
+ * @global (str) $datau      user xml raw obj from GSUSERSPATH/userid.xml
+ * @global (str) $USR        holds the GS_ADMIN_USERNAME cookie value
+ * @global (str) $HTMLEDITOR htmleditor toggle for auth user
+ * @global (str) $TIMEZONE   timezone for auth user
+ * @global (str) $LANG       language for auth user
  */
 // grab cookie user data from userid.xml
 GLOBAL
@@ -590,8 +594,8 @@ extract(getUserData(true));
 /**
  * Global Language Data
  *
- * @global  (array) $i18n i18n token keyed translation array
- * @global  (str) $LANG  IETF langcode (w/underscore delim) [tag]_[subtag]
+ * @global (array) $i18n i18n token keyed translation array
+ * @global (str) $LANG  IETF langcode (w/underscore delim) [tag]_[subtag]
  */
 
 GLOBAL
@@ -624,16 +628,17 @@ GLOBAL
 
 // grab authorization and security data fatal fail if salt is not set
 $SALT = getDefaultSalt();
-if(!isset($SALT) && $SITEURL !='' && notInInstall()) die(i18n_r('KILL_CANT_CONTINUE')."<br/>".sprintf(i18n_r('NOT_SET'),'SALT') );
+if(!isset($SALT) && $SITEURL !='' && notInInstall()) { die(i18n_r('KILL_CANT_CONTINUE')."<br/>".sprintf(i18n_r('NOT_SET'), 'SALT'));
+}
 $SESSIONHASH = sha1($SALT . $SITENAME);
 
 /**
  * Global editor vars (ckeditor)
  *
- * @global (str) 	$EDHEIGHT editor custom height
- * @global (str) 	$EDLANG editor custom user lang or lang file specified
- * @global (mixed) 	$EDTOOL editor custom toolbar, json array | php array | 'none' | ck toolbar_ name
- * @global (str) 	$EDOPTIONS editor custom options config, js obj string, comma delimited
+ * @global (str)    $EDHEIGHT editor custom height
+ * @global (str)    $EDLANG editor custom user lang or lang file specified
+ * @global (mixed)  $EDTOOL editor custom toolbar, json array | php array | 'none' | ck toolbar_ name
+ * @global (str)    $EDOPTIONS editor custom options config, js obj string, comma delimited
  */
 
 // Init Editor globals

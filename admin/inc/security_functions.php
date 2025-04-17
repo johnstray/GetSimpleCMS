@@ -1,8 +1,9 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if(!defined('IN_GS')) { die('you cannot load this page directly.');
+}
 /**
  * Security
  *
- * @package GetSimple
+ * @package    GetSimple
  * @subpackage Security-Functions
  */
 
@@ -240,19 +241,22 @@ function validate_safe_file($file, $name, $mime = null){
  *
  * @since 3.1.3
  *
- * @param string $filepath Unknown Path to file to check for safety
- * @param string $pathmatch Known Path to parent folder to check against
- * @param bool $subdir allow path to be a deeper subfolder
- * @param bool $newfile if true fallback and realpath basename, caution, use with other filename sanitizers
+ * @param  string $filepath  Unknown Path to file to check for safety
+ * @param  string $pathmatch Known Path to parent folder to check against
+ * @param  bool   $subdir    allow path to be a deeper subfolder
+ * @param  bool   $newfile   if true fallback and realpath basename, caution, use with other filename sanitizers
  * @return bool Returns true if files path resolves to your known path
  */
-function filepath_is_safe($filepath, $pathmatch, $subdir = true, $newfile = false){
-	$realpath = realpath($filepath);
-	if(!$realpath && $newfile) return path_is_safe(dirname($filepath),$pathmatch,$subdir);
+function filepath_is_safe($filepath, $pathmatch, $subdir = true, $newfile = false)
+{
+    $realpath = realpath($filepath);
+    if(!$realpath && $newfile) { return path_is_safe(dirname($filepath), $pathmatch, $subdir);
+    }
 
-	$realpathmatch = realpath($pathmatch);
-	if($subdir) return strpos(dirname($realpath),$realpathmatch) === 0;
-	return dirname($realpath) == $realpathmatch;
+    $realpathmatch = realpath($pathmatch);
+    if($subdir) { return strpos(dirname($realpath), $realpathmatch) === 0;
+    }
+    return dirname($realpath) == $realpathmatch;
 }
 
 /**
@@ -260,22 +264,24 @@ function filepath_is_safe($filepath, $pathmatch, $subdir = true, $newfile = fals
  *
  * @since 3.1.3
  *
- * @param string $path Unknown Path to check for safety
- * @param string $pathmatch Known Path to check against
- * @param bool $subdir allow path to be a deeper subfolder
+ * @param  string $path      Unknown Path to check for safety
+ * @param  string $pathmatch Known Path to check against
+ * @param  bool   $subdir    allow path to be a deeper subfolder
  * @return bool Returns true if $path is direct subfolder of $pathmatch
- *
  */
-function path_is_safe($path,$pathmatch,$subdir = true){
-	$realpath      = realpath($path);
-	$realpathmatch = realpath($pathmatch);
-	if($subdir) return strpos($realpath,$realpathmatch) === 0;
-	return $realpath == $realpathmatch;
+function path_is_safe($path,$pathmatch,$subdir = true)
+{
+    $realpath      = realpath($path);
+    $realpathmatch = realpath($pathmatch);
+    if($subdir) { return strpos($realpath, $realpathmatch) === 0;
+    }
+    return $realpath == $realpathmatch;
 }
 
 // alias to check a subdir easily
-function subpath_is_safe($path,$dir){
-	return path_is_safe($path.$dir,$path);
+function subpath_is_safe($path,$dir)
+{
+    return path_is_safe($path.$dir, $path);
 }
 
 /**
@@ -283,8 +289,9 @@ function subpath_is_safe($path,$dir){
  * 
  * @returns bool
  */
-function server_is_apache() {
-    return( strpos(strtolower(get_Server_Software()),'apache') !== false );
+function server_is_apache()
+{
+    return( strpos(strtolower(get_Server_Software()), 'apache') !== false );
 }
 
 /**
@@ -292,58 +299,65 @@ function server_is_apache() {
  * 
  * @returns string
  */
-function get_Server_Software() {
+function get_Server_Software()
+{
     return $_SERVER['SERVER_SOFTWARE'];
 }
 
 /**
  * Performs filtering on variable, falls back to htmlentities
  *
- * @since 3.3.0
+ * @since  3.3.0
  * @param  string $var    var to filter
  * @param  string $filter filter type
  * @return string         return filtered string
  */
-function var_out($var,$filter = "special"){
+function var_out($var,$filter = "special")
+{
 
-	// php 5.2 shim
-	if(!defined('FILTER_SANITIZE_FULL_SPECIAL_CHARS')){
-		define('FILTER_SANITIZE_FULL_SPECIAL_CHARS',522);
-		if($filter == "full") return htmlspecialchars($var, ENT_QUOTES);
-	}
+    // php 5.2 shim
+    if(!defined('FILTER_SANITIZE_FULL_SPECIAL_CHARS')) {
+        define('FILTER_SANITIZE_FULL_SPECIAL_CHARS', 522);
+        if($filter == "full") { return htmlspecialchars($var, ENT_QUOTES);
+        }
+    }
 
-    if(function_exists( "filter_var") && ($filter !== "string" )){
-		$aryFilter = array(
-			"int"     => FILTER_SANITIZE_NUMBER_INT,
-			"float"   => FILTER_SANITIZE_NUMBER_FLOAT,
-			"url"     => FILTER_SANITIZE_URL,
-			"email"   => FILTER_SANITIZE_EMAIL,
-			"special" => FILTER_SANITIZE_SPECIAL_CHARS,
-			"full"    => FILTER_SANITIZE_FULL_SPECIAL_CHARS
-		);
-		if(isset($aryFilter[$filter])) return filter_var( $var, $aryFilter[$filter]);
-		return filter_var( $var, FILTER_SANITIZE_SPECIAL_CHARS);
-	}
-	else if ($filter === "string") {
-		return htmlspecialchars($var);
-	}
-	else {
-		return htmlentities($var);
-	}
+    if(function_exists("filter_var") && ($filter !== "string" )) {
+        $aryFilter = array(
+            "int"     => FILTER_SANITIZE_NUMBER_INT,
+            "float"   => FILTER_SANITIZE_NUMBER_FLOAT,
+            "url"     => FILTER_SANITIZE_URL,
+            "email"   => FILTER_SANITIZE_EMAIL,
+            "special" => FILTER_SANITIZE_SPECIAL_CHARS,
+            "full"    => FILTER_SANITIZE_FULL_SPECIAL_CHARS
+        );
+        if(isset($aryFilter[$filter])) { return filter_var($var, $aryFilter[$filter]);
+        }
+        return filter_var($var, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+    else if ($filter === "string") {
+        return htmlspecialchars($var);
+    }
+    else {
+        return htmlentities($var);
+    }
 }
 
 //alias var_out for inputs in case we ned to diverge in future
-function var_in($var,$filter = 'special'){
-	return var_out($var,$filter);
+function var_in($var,$filter = 'special')
+{
+    return var_out($var, $filter);
 }
 
-function validImageFilename($file){
-	$image_exts = array('jpg','jpeg','gif','png');
-	return in_array(getFileExtension($file),$image_exts);
+function validImageFilename($file)
+{
+    $image_exts = array('jpg','jpeg','gif','png');
+    return in_array(getFileExtension($file), $image_exts);
 }
 
-function gs_get_magic_quotes_gpc(){
-	return false;
+function gs_get_magic_quotes_gpc()
+{
+    return false;
 }
 
 /* ?> */

@@ -1,4 +1,5 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if(!defined('IN_GS')) { die('you cannot load this page directly.');
+}
 /**
  * Filter Functions
  *
@@ -7,10 +8,10 @@
  * 
  * @since  3.4
  * @author shawn_a
- * @todo  create wiki docs
- * @link http://get-simple.info/docs/filters
+ * @todo   create wiki docs
+ * @link   http://get-simple.info/docs/filters
  *
- * @package GetSimple
+ * @package    GetSimple
  * @subpackage Filter-Functions
  */
 
@@ -33,13 +34,14 @@
  * helper for getPages
  *
  * @since  3.4
- * @param  array $pages PAGES collection
+ * @param  array    $pages PAGES collection
  * @param  callable $func  functionname to use as callback filter
- * @param  args $arg  args to pass on to func
+ * @param  args     $arg   args to pass on to func
  * @return array        new pagesarray
  */
-function filterPageFunc($pages,$func,$arg){
-	return filterArray($pages,$func,$arg);
+function filterPageFunc($pages,$func,$arg)
+{
+    return filterArray($pages, $func, $arg);
 }
 
 /**
@@ -219,14 +221,16 @@ function filterKeyFunc($pages,$key,$func){
  * compare(key,mykey)
  *
  * @since  3.4
- * @param  str $key    key to compare
+ * @param  str   $key  key to compare
  * @param  mixed $args arguments for comparison func
  * @return bool        returns bool from comparison func to remove KEY from PAGE
  */
-function filterKeyCmpFunc($key,$args/* array(key,comparisonfunc )*/){
-	list($fieldkey,$func) = $args;
-	if (function_exists($func))	return $func($key,$fieldkey);
-	return false;
+function filterKeyCmpFunc($key,$args/* array(key,comparisonfunc )*/)
+{
+    list($fieldkey,$func) = $args;
+    if (function_exists($func)) { return $func($key, $fieldkey);
+    }
+    return false;
 }
 
 /**
@@ -342,20 +346,24 @@ function filterArrayMatchAllCmp($a,$b){
  * pre process splits $a(meta) comma delimited string then compares to array provided
  */
 // match any
-function filterTagsMatchAnyCmp($a,$b){
-	return filterArrayMatchAnyCmp(tagsToAry($a,true),$b);
+function filterTagsMatchAnyCmp($a,$b)
+{
+    return filterArrayMatchAnyCmp(tagsToAry($a, true), $b);
 }
 // lowercase match any
-function filterTagsMatchAnyiCmp($a,$b){
-	return filterTagsMatchAnyCmp(lowercase($a),$b);
+function filterTagsMatchAnyiCmp($a,$b)
+{
+    return filterTagsMatchAnyCmp(lowercase($a), $b);
 }
 // match all tags
-function filterTagsMatchAllCmp($a,$b){
-	return filterArrayMatchAllCmp(tagsToAry($a,true),$b);
+function filterTagsMatchAllCmp($a,$b)
+{
+    return filterArrayMatchAllCmp(tagsToAry($a, true), $b);
 }
 // lowercase match all tags
-function filterTagsMatchAlliCmp($a,$b){
-	return filterTagsMatchAllCmp(lowercase($a),$b);
+function filterTagsMatchAlliCmp($a,$b)
+{
+    return filterTagsMatchAllCmp(lowercase($a), $b);
 }
 
 /**

@@ -1,15 +1,16 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if(!defined('IN_GS')) { die('you cannot load this page directly.');
+}
 /**
  * Configuration File
  *
- * @package GetSimple
+ * @package    GetSimple
  * @subpackage Config
  */
 
 $site_full_name     = 'GetSimple';
 $site_version_no    = '3.4.0a';
-$name_url_clean     = lowercase(str_replace(' ','-',$site_full_name));
-$ver_no_clean       = str_replace('.','',$site_version_no);
+$name_url_clean     = lowercase(str_replace(' ', '-', $site_full_name));
+$ver_no_clean       = str_replace('.', '', $site_version_no);
 $site_link_back_url = 'http://get-simple.info/';
 
 // cookie config

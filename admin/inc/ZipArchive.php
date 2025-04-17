@@ -684,40 +684,49 @@ ZipArchive::setup(); //try to find locations of zip/unzip binaries
  * or returns the number of error if filename does not
  * exist or in case of other error.
  */
-function zip_open ($filename) {}
+function zip_open($filename)
+{
+}
 
 /**
  * Close a ZIP file archive
- * @link http://php.net/manual/en/function.zip-close.php
- * @param zip resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-close.php
+ * @param  zip resource <p>
  * A ZIP file previously opened with zip_open.
  * </p>
  * @return void
  */
-function zip_close ($zip) {}
+function zip_close($zip)
+{
+}
 
 /**
  * Read next entry in a ZIP file archive
- * @link http://php.net/manual/en/function.zip-read.php
- * @param zip resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-read.php
+ * @param  zip resource <p>
  * A ZIP file previously opened with zip_open.
  * </p>
  * @return mixed a directory entry resource for later use with the
  * zip_entry_... functions or false if
  * there's no more entries to read or number of error in case of other error.
  */
-function zip_read ($zip) {}
+function zip_read($zip)
+{
+}
 
 /**
  * Open a directory entry for reading
- * @link http://php.net/manual/en/function.zip-entry-open.php
- * @param zip resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-entry-open.php
+ * @param  zip resource <p>
  * A valid resource handle returned by zip_open.
  * </p>
- * @param zip_entry resource <p>
+ * @param  zip_entry resource <p>
  * A directory entry returned by zip_read.
  * </p>
- * @param mode string[optional] <p>
+ * @param  mode string[optional] <p>
  * Any of the modes specified in the documentation of
  * fopen.
  * </p>
@@ -734,25 +743,31 @@ function zip_read ($zip) {}
  * indicates the result of the operation and is not needed for
  * reading or closing the directory entry.
  */
-function zip_entry_open ($zip, $zip_entry, $mode = null) {}
+function zip_entry_open($zip, $zip_entry, $mode = null)
+{
+}
 
 /**
  * Close a directory entry
- * @link http://php.net/manual/en/function.zip-entry-close.php
- * @param zip_entry resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-entry-close.php
+ * @param  zip_entry resource <p>
  * A directory entry previously opened zip_entry_open.
  * </p>
  * @return bool Returns true on success or false on failure.
  */
-function zip_entry_close ($zip_entry) {}
+function zip_entry_close($zip_entry)
+{
+}
 
 /**
  * Read from an open directory entry
- * @link http://php.net/manual/en/function.zip-entry-read.php
- * @param zip_entry resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-entry-read.php
+ * @param  zip_entry resource <p>
  * A directory entry returned by zip_read.
  * </p>
- * @param length int[optional] <p>
+ * @param  length int[optional] <p>
  * The number of bytes to return. If not specified, this function will
  * attempt to read 1024 bytes.
  * </p>
@@ -762,46 +777,60 @@ function zip_entry_close ($zip_entry) {}
  * @return string the data read, or false if the end of the file is
  * reached.
  */
-function zip_entry_read ($zip_entry, $length = null) {}
+function zip_entry_read($zip_entry, $length = null)
+{
+}
 
 /**
  * Retrieve the actual file size of a directory entry
- * @link http://php.net/manual/en/function.zip-entry-filesize.php
- * @param zip_entry resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-entry-filesize.php
+ * @param  zip_entry resource <p>
  * A directory entry returned by zip_read.
  * </p>
  * @return int The size of the directory entry.
  */
-function zip_entry_filesize ($zip_entry) {}
+function zip_entry_filesize($zip_entry)
+{
+}
 
 /**
  * Retrieve the name of a directory entry
- * @link http://php.net/manual/en/function.zip-entry-name.php
- * @param zip_entry resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-entry-name.php
+ * @param  zip_entry resource <p>
  * A directory entry returned by zip_read.
  * </p>
  * @return string The name of the directory entry.
  */
-function zip_entry_name ($zip_entry) {}
+function zip_entry_name($zip_entry)
+{
+}
 
 /**
  * Retrieve the compressed size of a directory entry
- * @link http://php.net/manual/en/function.zip-entry-compressedsize.php
- * @param zip_entry resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-entry-compressedsize.php
+ * @param  zip_entry resource <p>
  * A directory entry returned by zip_read.
  * </p>
  * @return int The compressed size.
  */
-function zip_entry_compressedsize ($zip_entry) {}
+function zip_entry_compressedsize($zip_entry)
+{
+}
 
 /**
  * Retrieve the compression method of a directory entry
- * @link http://php.net/manual/en/function.zip-entry-compressionmethod.php
- * @param zip_entry resource <p>
+ *
+ * @link   http://php.net/manual/en/function.zip-entry-compressionmethod.php
+ * @param  zip_entry resource <p>
  * A directory entry returned by zip_read.
  * </p>
  * @return string The compression method.
  */
-function zip_entry_compressionmethod ($zip_entry) {}
+function zip_entry_compressionmethod($zip_entry)
+{
+}
 
 /* ?> */

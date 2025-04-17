@@ -1,4 +1,5 @@
-<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+<?php if(!defined('IN_GS')) { die('you cannot load this page directly.');
+}
 /**
  * Sort Functions
  *
@@ -6,10 +7,10 @@
  * 
  * @since  3.4
  * @author shawn_a
- * @todo  create wiki docs
- * @link http://get-simple.info/docs/sorting
+ * @todo   create wiki docs
+ * @link   http://get-simple.info/docs/sorting
  *
- * @package GetSimple
+ * @package    GetSimple
  * @subpackage Sort-Functions
  */
 
@@ -81,25 +82,27 @@
  *
  * @todo   why is preparer arg2 $item[$key] value when it is already contained inside it ( I must have added this later on ), should pass $key instead
  * @param  array $pages   input multi array
- * @param  str $key       array key to sort by, if prepare function used key is used for arg2
- * @param  str $prepare   callback function for each subarray
+ * @param  str   $key     array key to sort by, if prepare function used key is used for arg2
+ * @param  str   $prepare callback function for each subarray
  * @return array          returns array sorted by key or prepared sort index
  */
-function sortCustomIndexCallback($array,$key=null,$prepare=""){
-	$sortvalue = array();
+function sortCustomIndexCallback($array,$key=null,$prepare="")
+{
+    $sortvalue = array();
 
-	if(!$array){
-		debugLog("sort array is empty");
-		return;
-	}
-	if(!empty($prepare) && function_exists($prepare)){
-		foreach($array as $sortkey=>$item){
-			if(isset($key)) $sortvalue[$sortkey] = $prepare($item,$item[$key]);
-			else $sortvalue[$sortkey] = $prepare($item);
-		}
-	}
-	// debugLog($sortvalue);
-	return sortCustomIndex($array,$key,$sortvalue);
+    if(!$array) {
+        debugLog("sort array is empty");
+        return;
+    }
+    if(!empty($prepare) && function_exists($prepare)) {
+        foreach($array as $sortkey=>$item){
+            if(isset($key)) { $sortvalue[$sortkey] = $prepare($item, $item[$key]);
+            } else { $sortvalue[$sortkey] = $prepare($item);
+            }
+        }
+    }
+    // debugLog($sortvalue);
+    return sortCustomIndex($array, $key, $sortvalue);
 }
 
 /**
@@ -107,6 +110,7 @@ function sortCustomIndexCallback($array,$key=null,$prepare=""){
  * by sub key, or a keyed custom sort index
  * 
  * array['id'] = array[$key]
+ *
  * @since  3.4
  * @param  array $array     keyed multidimensional array to sort
  * @param  str   $key       (optional) sub array key to sort by, unused if sortindex supplied
@@ -151,43 +155,52 @@ function arrayMergeSort($array,$sort,$keyed = true){
  * sort array in place using sort array
  * uses tmp global variable and custom function to sort array 
  * by another sorted keyed array or array of keys
- * @param  array  $array keyed array to sort
- * @param  array  $sort  keyed array to sort from
+ *
+ * @param  array   $array keyed array to sort
+ * @param  array   $sort  keyed array to sort from
  * @param  boolean $keyed true indicates sort array is already keyed, else array of keys
  * @return array         sorted array
  */
-function inPlaceKeySort($array,$sort,$keyed = true){
-	GLOBAL $sortvalue;
-	if(!$keyed) $sort = array_flip($sort);
-	$sortvalue = $sort;
-	function custom_sort($a,$b) {
-		GLOBAL $sortvalue;
-		return strnatcmp($sortvalue[$a], $sortvalue[$b]);
-	}
+function inPlaceKeySort($array,$sort,$keyed = true)
+{
+    GLOBAL $sortvalue;
+    if(!$keyed) { $sort = array_flip($sort);
+    }
+    $sortvalue = $sort;
+    function custom_sort($a,$b)
+    {
+        GLOBAL $sortvalue;
+        return strnatcmp($sortvalue[$a], $sortvalue[$b]);
+    }
 
-	if($sort) uksort($array, 'custom_sort');
-	unset($sortvalue);
-	return $array;
+    if($sort) { uksort($array, 'custom_sort');
+    }
+    unset($sortvalue);
+    return $array;
 }
 
 
 /**
  * sort multidimensional array by subarray key value
- * @todo  add php 5.4 multisort(,,SORT_NATURAL)
+ *
+ * @todo   add php 5.4 multisort(,,SORT_NATURAL)
  * @param  str $pages array
  * @param  str $key   keyname to sort by
  * @return array      sorted array
  */
-function sortKey($array,$key, $sortfunc = "custom_strnatcasecmp"){
-	GLOBAL $sortkey;
-	$sortkey = $key;
-    function custom_sort($a,$b) {
-    	GLOBAL $sortkey;
-       	return $a[$sortkey]>$b[$sortkey];
-    }
-    function custom_strnatcasecmp($a,$b) {
+function sortKey($array,$key, $sortfunc = "custom_strnatcasecmp")
+{
+    GLOBAL $sortkey;
+    $sortkey = $key;
+    function custom_sort($a,$b)
+    {
         GLOBAL $sortkey;
-        return strnatcasecmp($a[$sortkey],$b[$sortkey]);
+        return $a[$sortkey]>$b[$sortkey];
+    }
+    function custom_strnatcasecmp($a,$b)
+    {
+        GLOBAL $sortkey;
+        return strnatcasecmp($a[$sortkey], $b[$sortkey]);
     }
     uasort($array, $sortfunc);
     unset($sortkey);
@@ -391,12 +404,13 @@ function prepare_menuOrderParentTitle($page,$key){
  * SORT WRAPPER FUNCS
  * page sorts with predefined sort preparers
  */
-
-function getPagesSortedByMenuTitle(){
-	return sortCustomIndexCallback(getpages(),'title','prepare_menuOrderParentTitle');
+function getPagesSortedByMenuTitle()
+{
+    return sortCustomIndexCallback(getpages(), 'title', 'prepare_menuOrderParentTitle');
 }
 
 
-function getPagesSortedByMenu(){
-	return sortCustomIndex(getpages(),'menuOrder');
+function getPagesSortedByMenu()
+{
+    return sortCustomIndex(getpages(), 'menuOrder');
 }
