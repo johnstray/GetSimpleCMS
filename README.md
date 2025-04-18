@@ -1,5 +1,5 @@
 <h1 align="center">
-	<img src="http://get-simple.info/data/uploads/getsimple-logo-2.png" style="height:48px" /><br />
+	<img src="http://getsimple.info/data/uploads/getsimple-logo-2.png" style="height:48px" /><br />
 	GetSimple Content Management System
 </h1>
 <h6 align="center">A flatfile CMS written in PHP that works fast and efficient.</h6>
@@ -11,7 +11,7 @@
 	<img src="https://img.shields.io/github/v/release/johnstray/GetSimpleCMS?label=latest%20release" alt="Latest release version" />
 	<img src="https://img.shields.io/github/downloads/johnstray/GetSimpleCMS/total" alt="Total GitHub release downloads" />
 	<img src="https://img.shields.io/github/license/johnstray/GetSimpleCMS" alt="License" />
-	<img src="https://img.shields.io/github/issues-raw/johnstray/gGetSimpleCMS?logo=github" alt="GitHub open issues" />
+	<img src="https://img.shields.io/github/issues-raw/johnstray/GetSimpleCMS?logo=github" alt="GitHub open issues" />
 	<img src="https://img.shields.io/github/last-commit/johnstray/GetSimpleCMS?logo=github" alt="GitHub last commit" />
 </p>
 
@@ -28,14 +28,14 @@
 ## About
 GetSimple CMS is a flatfile CMS that works fast and efficient and has the best UI around, it is written in PHP.
 
-Official Website - http://get-simple.info/
-Github - https://github.com/GetSimpleCMS/GetSimpleCMS
+Official Website - http://get-simple.info/ : New Website (This Fork) - https://getsimple.info/<br>
+Github (Original) - https://github.com/GetSimpleCMS/GetSimpleCMS
 
 GetSimple CMS was developed by Chris Cagle [ http://chriscagle.me ]. It is now passionately supported and developed by a loving community.
 
 ## Installation
 
-Please see: http://get-simple.info/docs/installation
+Please see: http://getsimple.info/docs/installation
 
 #### Requirements
 
@@ -60,7 +60,7 @@ It would be great if you would link back to get-simple.info if you use it.
 
 While GetSimple strives to be a secure and stable application, we simply cannot be held liable for any information loss, corruption or anything else that may happen to your site while it is using the our software. 
 
-If you find a bug or security hole, please contact someone in the forums at http://get-simple.info/forum
+If you find a bug or security hole, please contact someone in the forums at http://forums.getsimple.info/
 
 
 ## Credits
