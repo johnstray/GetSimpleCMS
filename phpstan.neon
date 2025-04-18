@@ -1,10 +1,14 @@
 parameters:
-    level: 5 # the analysis level, from 0 (loose) to 8 (strict)
-    paths: # the paths to scan
+    level: 5
+    paths:
+        - index.php
+        - temp.gsconfig.php
         - admin/
         - admin/inc/
         - admin/template/
         - admin/lang/
+        - theme/Cardinal/
+        - theme/Innovation/
     ignoreErrors:
         -
             identifier: variable.undefined

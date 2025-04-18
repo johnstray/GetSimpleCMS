@@ -1,4 +1,5 @@
 <?php
+
 /**
  * GSConfig
  *
@@ -9,7 +10,7 @@
 
 /** Prevent direct access */
 if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
-	die('You cannot load this page directly.');
+    die('You cannot load this page directly.');
 };
 
 /*****************************************************************************/
@@ -93,7 +94,7 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 # define('GSMERGELANG',false);
 
 /**
-* GS can prevent backend or frontend pages from being loaded inside a frame 
+* GS can prevent backend or frontend pages from being loaded inside a frame
 * this is done by sending an x-frame-options header, and helps protect against clickjacking attacks
 * This is enabled by default for backend pages (true/GSBACK)
 * setting GSNOFRAME to (false) will disable this behavior
@@ -115,26 +116,24 @@ if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
 // enable editing theme root files in theme editor
 # define('GSTHEMEEDITROOT',true);
 
-// custom nav tabs list (str) csv list of page ids and their order( tabs missing will still be accessible in the footer )
+// custom nav tabs list (str) csv list of page ids and their order (tabs missing will still be accessible in the footer)
 #define('GSTABS','pages,upload,theme,theme-edit,snippets,components,backups,plugins,log,health-check')
 
 /**
  * DO NOT EDIT BELOW THIS LINE
- * 
+ *
  * definitions for GS 3.3 legacy appearance, disables stuff added in 3.4 ( mostly )
  * reference only do not uncomment this
-'GSTABICONS'           => false,              // (bool) show icons on nav tabs
+'GSTABICONS'           => false,          // (bool) show icons on nav tabs
 'GSTABS'               => 'pages,upload,theme,backups,plugins', // (str) csv list of page ids and order to show tabs
-'GSWIDEPAGES'          => '',                 // (str-csv) pages to apply GSWIDTHWIDE on
-'GSSTYLE'              => '',                 // (str-csv) default style modifiers
-'GSAJAXSAVE'           => false,              // (bool) use ajax for saving themes, components, and pages
-'GSPAGETABS'           => false,              // (bool) use tabbed interface for page edit ( no page options toggle when off )
-'GSUSEDRAFTS'          => false,              // (bool) use page drafts
-'GSTHUMBSSHOW'         => false,              // (bool) always show thumbnails
-'GSSNIPPETSATTRIB'     => '',                 // (str) callback funcname for htmleditors used to init htmleditor
-'GSCOMPONENTSATTRIB'   => '',                 // (str) callback funcname for codeeditors used to init codeeditor
-'GSHEADERCLASS'        => 'gradient',         // (str) custom class to add to header eg. `gradient` to add 3.3 gradients back
+'GSWIDEPAGES'          => '',             // (str-csv) pages to apply GSWIDTHWIDE on
+'GSSTYLE'              => '',             // (str-csv) default style modifiers
+'GSAJAXSAVE'           => false,          // (bool) use ajax for saving themes, components, and pages
+'GSPAGETABS'           => false,          // (bool) use tabbed interface for page edit (no page options toggle when off)
+'GSUSEDRAFTS'          => false,          // (bool) use page drafts
+'GSTHUMBSSHOW'         => false,          // (bool) always show thumbnails
+'GSSNIPPETSATTRIB'     => '',             // (str) callback funcname for htmleditors used to init htmleditor
+'GSCOMPONENTSATTRIB'   => '',             // (str) callback funcname for codeeditors used to init codeeditor
+'GSHEADERCLASS'        => 'gradient',     // (str) custom class to add to header eg. `gradient` to add 3.3 gradients
 'GSEDITOROPTIONS'      => "skin: 'moonocolor'" // moonocolor skin has not been updated in a long time
  */
-
-?>
