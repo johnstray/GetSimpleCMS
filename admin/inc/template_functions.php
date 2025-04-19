@@ -74,6 +74,21 @@ function isPage($page)
 }
 
 /**
+ * is autosave
+ *
+ * Check if the page has the autosave feature enabled
+ *
+ * @return boolean true if enabled, false if not
+ */
+function isAutoSave()
+{
+    if (getDef('GSUSEDRAFTS', true) && !isset($_REQUEST['nodraft']) && isset($_REQUEST['id'])) {
+        return true;
+    }
+    return false;
+}
+
+/**
  * Check Permissions
  *
  * Returns the CHMOD value of a particular file or path
@@ -1133,7 +1148,7 @@ function getPagesRow($page,$level,$index,$parent,$children)
 
     $menu .= '<td class="pagetitle break">'. $indentation .'<a title="'.i18n_r('EDITPAGE_TITLE').': '. var_out($pagetitle) .'" href="edit.php?id='. $page['url'] .'" >'. var_out($pagetitle, "string") .'</a>';
     $menu .= '<div class="showstatus toggle" >'. $pageindex .  $pagedraft . $pageprivate . $pagemenustatus .'</div></td>'; // keywords used for filtering
-    $menu .= '<td style="width:80px;text-align:right;" ><span>'.$pagepubdate.'</span></td>';
+    $menu .= '<td class="small"><span>'.$pagepubdate.'</span></td>';
     $menu .= '<td class="secondarylink" >';
     $menu .= '<a title="'.i18n_r('VIEWPAGE_TITLE').': '. var_out($pagetitle) .'" target="_blank" href="'. find_url($page['url'], $page['parent']) .'">#</a>';
     $menu .= '</td>';

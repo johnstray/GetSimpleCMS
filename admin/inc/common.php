@@ -64,11 +64,11 @@ $GS_constants = array(
 	'GSBAKFILEPREFIX'       => '.bak',                        // (str) backup file naming prefix before extension
 	'GSRESETFILESUFFIX'     => '.reset',                      // (str) password reset file naming suffix before extension
 	'GSRESETFILEPREFIX'     => '',                            // (str) password reset file naming prefix after extension
-	'GSDEFAULTPERMALINK'    => '%path%/%slug%/',              // (str) default permalink structure to use if prettyurls is enabled, and custom not exist 
+	'GSDEFAULTPERMALINK'    => '%path%/%slug%/',              // (str) default permalink structure to use if prettyurls is enabled, and custom not exist
 	'GSTOKENDELIM'          => '%',                           // (str) delimiter for token boundaries
 	'GSLOGINQSALLOWED'      => 'id,draft,nodraft,safemode,i,path',   // (str) csv query string keys to allow during login redirects
 	'GSPAGECACHEEXCLUDE'    => 'content',                     // (str) csv list of page fields to exlclude from page cache
-	# -----------------------------------------------------------------------------------------------------------------------------------------------	
+	# -----------------------------------------------------------------------------------------------------------------------------------------------
 	'GSCONSTANTSLOADED'     => true                           // $GS_constants IS LOADED FLAG
 );
 
@@ -122,7 +122,7 @@ $GS_definitions = array(
 	'GSALLOWUPLOADCREATE'  => true,                           // (bool) allow upload folder creation
 	'GSALLOWUPLOADDELETE'  => true,                           // (bool) allow upload file/folder delete
 	'GSALLOWBROWSEUPLOAD'  => true,                           // (bool) allow uploading when browsing files
-	'GSUSEGSUPLOADER'      => true,                           // (bool) use ajax upload library gsupload (dropzone) for uploads, else standard form 
+	'GSUSEGSUPLOADER'      => true,                           // (bool) use ajax upload library gsupload (dropzone) for uploads, else standard form
 	'GSUPLOADSLC'          => true,                           // (bool) if true force upload filenames to lowercase
 	'GSUPLOADSEXTLC'       => true,                           // (bool) if true force upload extensions to lowercase
 	'GSAUTOUPLOADPATH'     => "autoupload",                   // (str) subpath to put uploads in when performing autouploads
@@ -143,7 +143,7 @@ $GS_definitions = array(
 	'GSEDITORTOOL'         => 'basic',                        // (str) wysiwyg editor toobar
 	'GSHTMLEDITINLINE'     => false,                          // (bool) show html cke editors inline EXPERIMENTAL
 	'GSHTMLEDITCOMPACT'    => true,                           // (bool) show html cke editors compacted, hides ui when not focused
-	'GSHTMLEDITAUTOHEIGHT' => true,                           // (bool) after init, auto set the ckeditors height	
+	'GSHTMLEDITAUTOHEIGHT' => true,                           // (bool) after init, auto set the ckeditors height
 	// 'GSCODEEDITORTHEMES'   => '3024-day,3024-night,abcdef,ambiance-mobile,ambiance,base16-dark,base16-light,bespin,blackboard,cobalt,colorforth,default,dracula,duotone-dark,duotone-light,eclipse,elegant,erlang-dark,hopscotch,icecoder,isotope,lesser-dark,liquibyte,material,mbo,mdn-like,midnight,monokai,neat,neo,night,panda-syntax,paraiso-dark,paraiso-light,pastel-on-dark,railscasts,rubyblue,seti,solarized light,solarized dark,the-matrix,tomorrow-night-bright,tomorrow-night-eighties,ttcn,twilight,vibrant-ink,xq-dark,xq-light,yeti,zenburn', # themes for codemirror
 	'GSCODEEDITORTHEMES'   => '
 		monokai,
@@ -356,11 +356,12 @@ $sidemenutitles = array(
 	'theme'        => "SIDE_CHOOSE_THEME", // default
 	'edit'         => "SIDE_CREATE_NEW",   // default
 	'pages'        => "SIDE_VIEW_PAGES",
+    'menu-manager' => "MENU_MANAGER",
 	'settings'     => "SIDE_GEN_SETTINGS",
 	'profile'      => "SIDE_USER_PROFILE",
-	'archives'     => "SIDE_WEB_ARCHIVES",
+	'archive'      => "SIDE_WEB_ARCHIVES",
 	'backups'      => "SIDE_PAGE_BAK"
-	// 'backups'      => "SIDE_VIEW_BAK", 
+	// 'backups'      => "SIDE_VIEW_BAK",
 	// 'docs'         => "SIDE_DOCUMENTATION",
 );
 
@@ -376,7 +377,7 @@ $icondefinition = array(
 	'TAB_components'   => '<i class="fas fa-fw fa-cubes"></i>',// cubes
 	'TAB_snippets'     => '<i class="fas fa-fw fa-quote-left"></i>',// quote-left cut cube
 	'TAB_sitemap'      => '<i class="fas fa-fw fa-map"></i>',// sitemap globe
-	'TAB_backups'      => '<i class="fas fa-fw fa-history"></i>',// history 
+	'TAB_backups'      => '<i class="fas fa-fw fa-history"></i>',// history
 	'TAB_archive'      => '<i class="fas fa-fw fa-archive"></i>',// archive file-archive
 	'TAB_plugins'      => '<i class="fas fa-fw fa-plug"></i>',// plug
 	'TAB_support'      => '<i class="fas fa-fw fa-life-ring"></i>',// first-aid med-kit
@@ -434,7 +435,7 @@ if(defined('GSDEBUG') && (bool) GSDEBUG === true) {
 	ini_set('display_errors', 1);
 	// $nocache = true;
 } else if( defined('GSSUPPRESSERRORS') && (bool)GSSUPPRESSERRORS === true ) {
-	debugLog('GSSUPPRESSERRORS: TRUE');	
+	debugLog('GSSUPPRESSERRORS: TRUE');
 	error_reporting(0);
 	ini_set('display_errors', 0);
 }
@@ -650,7 +651,7 @@ GLOBAL
 ;
 
 // init editor globals
-if(!defined('GSCKETSTAMP')) define('GSCKETSTAMP',get_gs_version()); // ckeditor asset querystring for cache control 
+if(!defined('GSCKETSTAMP')) define('GSCKETSTAMP',get_gs_version()); // ckeditor asset querystring for cache control
 $EDHEIGHT  = getEditorHeight();
 $EDLANG    = getEditorLang();
 $EDOPTIONS = getEditorOptions();
@@ -769,7 +770,7 @@ if($SAFEMODE){
 		debugLog("SAFEMODE ON");
 		$load['plugin'] = false;
 		loadPluginData();
-	}	
+	}
 }
 
 // load plugins functions
@@ -945,7 +946,7 @@ function getGSRootPath($calculate = false){
 		$file = getcwd(); // get workign path, __DIR__ is NOT the same @todo add double check here
 		$path = dirname($_SERVER['SCRIPT_NAME']); // get script path
 		$file = str_replace("\\", "/", $file);    // normalize slashes
-		
+
 		// tts
 		// $file = trim($file,"/");
 		// $path = trim($path,"/");
@@ -954,16 +955,16 @@ function getGSRootPath($calculate = false){
 		$pathpartsfile = explode("/",$file);
 		$pathpartsfile = array_reverse($pathpartsfile);
 		debugLog($pathpartsfile);
-		
-		$pathpartspath = explode("/",$path);		
+
+		$pathpartspath = explode("/",$path);
 		$pathpartspath = array_reverse($pathpartspath);
 		debugLog($pathpartspath);
-		
+
 		// find index of first diff
 		$pathdiff        = array_diff($pathpartspath,$pathpartsfile);
 		$pathdiffindices = array_keys($pathdiff);
 		$pathdiffindex   = isset($pathdiffindices[0]) ? $pathdiffindices[0] : 0;
-		
+
 		// remove everyting after the first diff
 		$pathpartsfile = array_slice($pathpartsfile,$pathdiffindex,count($pathpartsfile));
 		// replace dir with real dir using index
@@ -973,7 +974,7 @@ function getGSRootPath($calculate = false){
 		// reassemble
 		$pathpartsfile = array_reverse($pathpartsfile);
 		$file = implode(DIRECTORY_SEPARATOR,$pathpartsfile);
-		
+
 		debugLog($file);
 		return $file.DIRECTORY_SEPARATOR;
 	}

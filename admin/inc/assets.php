@@ -3,10 +3,8 @@
 // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterComma
 // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma
 // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma
-
-if (!defined('IN_GS')) {
-    die('you cannot load this page directly.');
-}
+// phpcs:disable Generic.Files.LineLength.TooLong
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 
 /**
  * Getsimple Assets Init
@@ -14,6 +12,10 @@ if (!defined('IN_GS')) {
  * @package    GetSimple
  * @subpackage assets
  */
+
+if (!defined('IN_GS')) {
+    die('you cannot load this page directly.');
+}
 
 $GS_scripts = array();  // global array for storing queued script assets
 /*
@@ -65,7 +67,8 @@ $VERSIONS = array(
   'jquery-mousewheel' => '3.1.13',
   'scrolltofixed'     => '1.0.8',
   'spin'              => '2.3.2',
-  'lazyload'          => '0.0.1'
+  'lazyload'          => '0.0.1',
+  'bootstrap'         => '5.3.3',
 );
 
 $jqueryuitheme = "custom";
@@ -180,6 +183,16 @@ $GS_script_assets['ckeditor']['cdn']['ver']        = $VERSIONS['ckeditor'];
 $GS_script_assets['ckeditor']['local']['url']      = $ASSETPATH . 'js/ckeditor/ckeditor.js';
 $GS_script_assets['ckeditor']['local']['ver']      = $VERSIONS['ckeditor'];
 
+// Bootstrap
+$GS_style_assets['bootstrap']['cdn']['url']        = '//maxcdn.bootstrapcdn.com/bootstrap/' . $VERSIONS['bootstrap'] . '/css/bootstrap.min.css';
+$GS_style_assets['bootstrap']['cdn']['ver']        = $VERSIONS['bootstrap'];
+$GS_style_assets['bootstrap']['local']['url']      = $ASSETPATH . 'bootstrap/css/bootstrap.min.css';
+$GS_style_assets['bootstrap']['local']['ver']      = $VERSIONS['bootstrap'];
+$GS_script_assets['bootstrap']['cdn']['url']       = '//maxcdn.bootstrapcdn.com/bootstrap/' . $VERSIONS['bootstrap'] . '/js/bootstrap.min.js';
+$GS_script_assets['bootstrap']['cdn']['ver']       = $VERSIONS['bootstrap'];
+$GS_script_assets['bootstrap']['local']['url']     = $ASSETPATH . 'bootstrap/js/bootstrap.min.js';
+$GS_script_assets['bootstrap']['local']['ver']     = $VERSIONS['bootstrap'];
+
 
 /**
  * Core alias groups
@@ -223,6 +236,7 @@ preRegisterScript('dropzone',     '',   false , $infooter);
 preRegisterScript('fancybox',     '',   false , $infooter);
 preRegisterScript('jquery-mousewheel',     '',   false , $infooter);
 preRegisterScript('scrolltofixed','',   false , $infooter);
+preRegisterScript('bootstrap',    '', !$nocdn , $infooter);
 
 // gs aliases
 preRegisterScript('gshtmleditor', $GS_script_assets['gsckeditor'],     false , $infooter);
@@ -236,6 +250,7 @@ preRegisterStyle('jcrop',         '',   false , 'screen');
 preRegisterStyle('fancybox-css',  '',   false , 'screen'); // DEPRECATED legacy , styleid not matching scriptid is confusing.
 preRegisterStyle('fancybox',      '',   false , 'screen');
 preRegisterStyle('jquery-ui',     '',   false , 'screen');
+preRegisterStyle('bootstrap',     '', !$nocdn , 'screen');
 
 /**
  * Queue our scripts and styles for the backend
@@ -248,11 +263,13 @@ queue_script('spin'          , GSBACK);
 queue_script('gstree'        , GSBACK);
 queue_script('fancybox'      , GSBACK);
 queue_script('scrolltofixed' , GSBACK);
+queue_script('bootstrap'     , GSBACK);
 
 queue_style('fancybox'       , GSBACK);
 queue_style('jquery-ui'      , GSBACK);
 // queue_style('jquery-ui-theme', GSBACK); // unused, reserved for custom GS jquery ui theme if ever needed
 queue_style('font-awesome'   , GSBACK);
+queue_style('bootstrap'      , GSBACK);
 
 
 // inline tests
@@ -284,16 +301,21 @@ queue_style('font-awesome'   , GSBACK);
  */
 function preRegisterScript($id, $config = array(), $CDN = false, $footer = false)
 {
-    GLOBAL $GS_script_assets;
-    if (!$config && isset($GS_script_assets[$id])) { $config = $GS_script_assets[$id];
+    global $GS_script_assets;
+    if (!$config && isset($GS_script_assets[$id])) {
+        $config = $GS_script_assets[$id];
     }
-    if (!$config) { return;
+    if (!$config) {
+        return;
     }
     $queue = isset($config['queue']) ? $config['queue'] : null;
-    if (isset($config['local']['code'])) { return register_script_code($id, $config['local']['code'], $config['local']['ver'], $footer, $queue);
+    if (isset($config['local']['code'])) {
+        return register_script_code($id, $config['local']['code'], $config['local']['ver'], $footer, $queue);
     }
-    if ($CDN && isset($config['cdn'])) { return register_script($id, $config['cdn']['url'], '', $footer, $queue); // no version for CDN benefits
-    } else { return register_script($id, $config['local']['url'], $config['local']['ver'], $footer, $queue);
+    if ($CDN && isset($config['cdn'])) {
+        return register_script($id, $config['cdn']['url'], '', $footer, $queue); // no version for CDN benefits
+    } else {
+        return register_script($id, $config['local']['url'], $config['local']['ver'], $footer, $queue);
     }
 }
 
@@ -374,7 +396,7 @@ function deregister_script($handle)
  *
  * @param string $handle name for the script to load
  */
-function queue_script($handle,$where)
+function queue_script($handle, $where)
 {
     global $GS_scripts;
     if (array_key_exists($handle, $GS_scripts)) {
@@ -383,15 +405,17 @@ function queue_script($handle,$where)
             $config = $GS_scripts[$handle]['queue'];
 
             if (isset($config['script'])) {
-                if (!is_array($config['script'])) { $config['script'] = explode(',',$config['script']);
+                if (!is_array($config['script'])) {
+                    $config['script'] = explode(',', $config['script']);
                 }
-                array_map('queue_script',$config['script'],array_fill(0,count($config['script']),$where));
+                array_map('queue_script', $config['script'], array_fill(0, count($config['script']), $where));
             }
 
             if (isset($config['style'])) {
-                if (!is_array($config['style'])) {  $config['style'] = explode(',',$config['style']);
+                if (!is_array($config['style'])) {
+                    $config['style'] = explode(',', $config['style']);
                 }
-                array_map('queue_style',$config['style'],array_fill(0,count($config['style']),$where));
+                array_map('queue_style', $config['style'], array_fill(0, count($config['style']), $where));
             }
         }
 
@@ -454,14 +478,16 @@ function getScripts($facing = GSBACK, $footer = false)
     // debugLog($GS_scripts);
     foreach ($GS_scripts as $script) {
         if ($script['load'] == true && ($script['where'] & $facing)) {
-            if ($footer !== $script['in_footer']) { continue;
+            if ($footer !== $script['in_footer']) {
+                continue;
             }
             if (isset($script['code'])) {
                 $str .= "<script>" . $script['code'] . "</script>";
                 continue;
             }
             $str .= '<script src="' . $script['src'] . ( !empty($script['ver']) ? '?v=' . $script['ver'] : '' ) . '"></script>' . "\n";
-            if (getDef('GSCDNFALLBACK', true) || !is_frontend()) { $str .= cdn_fallback($script);
+            if (getDef('GSCDNFALLBACK', true) || !is_frontend()) {
+                $str .= cdn_fallback($script);
             }
         }
     }
@@ -483,14 +509,15 @@ function cdn_fallback($script)
 
 function build_cdn_fallback($script)
 {
-    GLOBAL $GS_script_assets, $GS_asset_objects;
+    global $GS_script_assets, $GS_asset_objects;
     $str = '';
-    if (getDef('GSNOCDN',true)) { return; // if nocdn skip
+    if (getDef('GSNOCDN',true)) {
+        return; // if nocdn skip
     }
     if ($script['name'] == 'jquery' || $script['name'] == 'jquery-ui') {
         $str .= "<script>";
         $str .= "window." . $GS_asset_objects[$script['name']] . " || ";
-        $str .= "document.write('<!-- CDN FALLING BACK --><script src=\"" . $GS_script_assets[$script['name']]['local']['url'] . '?v='.$GS_script_assets[$script['name']]['local']['ver'] . "\"><\/script>');";
+        $str .= "document.write('<!-- CDN FALLING BACK --><script src=\"" . $GS_script_assets[$script['name']]['local']['url'] . '?v=' . $GS_script_assets[$script['name']]['local']['ver'] . "\"><\/script>');";
         $str .= "</script>\n";
     }
 
@@ -511,11 +538,11 @@ function queue_style($handle, $where = 1)
 {
     global $GS_styles;
     if (array_key_exists($handle, $GS_styles)) {
-
         // load items queue
         if (isset($GS_scripts[$handle]['queue'])) {
             $config = $GS_scripts[$handle]['queue'];
-            if (isset($config['style'])) {  array_map('queue_style', $config['style'], array_fill(0, count($config['style']), $where));
+            if (isset($config['style'])) {
+                array_map('queue_style', $config['style'], array_fill(0, count($config['style']), $where));
             }
         }
 
@@ -555,16 +582,21 @@ function dequeue_style($handle, $where)
  */
 function preRegisterStyle($id, $config = array(), $CDN = false, $media = 'screen')
 {
-    GLOBAL $GS_style_assets;
-    if (!$config && isset($GS_style_assets[$id])) { $config = $GS_style_assets[$id];
+    global $GS_style_assets;
+    if (!$config && isset($GS_style_assets[$id])) {
+        $config = $GS_style_assets[$id];
     }
-    if (!$config) { return;
+    if (!$config) {
+        return;
     }
     $queue = isset($config['queue']) ? $config['queue'] : null;
-    if (isset($config['local']['code'])) { return register_style_code($id, $config['local']['code'], $config['local']['ver'], $media,$queue);
+    if (isset($config['local']['code'])) {
+        return register_style_code($id, $config['local']['code'], $config['local']['ver'], $media,$queue);
     }
-    if ($CDN && isset($config['cdn'])) { return register_style($id, $config['cdn']['url'], '', $media, $queue); // no version for CDN benefits
-    } else { return register_style($id, $config['local']['url'], $config['local']['ver'], $media, $queue);
+    if ($CDN && isset($config['cdn'])) {
+        return register_style($id, $config['cdn']['url'], '', $media, $queue); // no version for CDN benefits
+    } else {
+        return register_style($id, $config['local']['url'], $config['local']['ver'], $media, $queue);
     }
 }
 
@@ -643,7 +675,7 @@ function getStyles($facing = GSBACK)
     global $GS_styles;
     $str = '';
     foreach ($GS_styles as $style) {
-        if ($style['where'] & $facing ) {
+        if ($style['where'] & $facing) {
             if ($style['load'] == true) {
                 if (isset($style['code'])) {
                     $str .= "<style>" . $style['code'] . "</style>";

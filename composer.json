@@ -26,5 +26,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "require": {
+        "twbs/bootstrap": "5.3.3"
     }
 }

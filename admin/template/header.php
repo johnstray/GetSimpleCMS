@@ -17,7 +17,6 @@ global $SITENAME, $SITEURL, $GSADMIN, $themeslector, $pagetitle, $SESSIONHASH, $
 # Layout style flags
 $GSSTYLE = getDef('GSSTYLE') ? GSSTYLE : '';
 $GScontainer = in_array('wide', explode(',', $GSSTYLE)) ? 'container-fluid' : 'container';
-$headerclass = getDef('GSHEADERCLASS', true) ? getDef('GSHEADERCLASS') : '';
 
 if (isPage('index') === false) {
     // @hook admin-pre-header - Backend before header output
@@ -89,18 +88,6 @@ if (file_exists(GSTHEMESPATH . getDef('GSEDITORSTYLESFILE'))) {
         getRelPath(GSTHEMESPATH) . getDef('GSEDITORSTYLESFILE');
 }
 
-/**
- * @todo: Move this function somewhere else.
- * PSR1.FilesSideEffects.FoundWithSymbols
- */
-function isAutoSave()
-{
-    if (getDef('GSUSEDRAFTS', true) && !isset($_REQUEST['nodraft']) && isset($_REQUEST['id'])) {
-        return true;
-    }
-    return false;
-}
-
 ?><!DOCTYPE html><!-- HTML5 : XHTML Compantible -->
 <html lang="<?php echo get_site_lang(true); ?>">
     <head>
@@ -113,13 +100,6 @@ function isAutoSave()
             <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <?php } ?>
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="stylesheet" type="text/css" href="template/styles/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="template/styles/fontawesome-all.min.css" />
-
-        <!-- During Development only, will be moved to styles.php -->
-        <link rel="stylesheet" type="text/css" href="template/styles/main.css" />
-        <!--<link rel="stylesheet" type="text/css"
-            href="template/style.php?<?php echo 's=' . $GSSTYLE . '&v=' . GSVERSION; ?>" media="screen" />-->
 
         <script type="text/javascript">
             /** @todo: Clean this up, use a better bridge to initialize config variables in JS */
@@ -186,6 +166,11 @@ function isAutoSave()
         </script>
 
         <?php get_scripts_backend(); // Load backend scripts after globals set ?>
+
+        <!-- During Development only, will be moved to styles.php -->
+        <link rel="stylesheet" type="text/css" href="template/styles/main.css" />
+        <!--<link rel="stylesheet" type="text/css"
+            href="template/style.php?<?php echo 's=' . $GSSTYLE . '&v=' . GSVERSION; ?>" media="screen" />-->
 
         <script type="text/javascript">
             jQuery(document).ready(function () {
