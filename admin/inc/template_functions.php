@@ -2366,10 +2366,11 @@ function getCollectionItemOutput($collectionid,$id,$item,$class = 'item_edit',$c
         $str .= '<td style="text-align:right;" ><code>&lt;?php '.$code.'(<span class="compslugcode">\''.$item->slug.'\'</span>); ?&gt;</code></td>';
     }
 
-    $str .= '<td class="compactive"><label class="" for="active[]" >'.i18n_r('ACTIVE').'</label>';
-    $str .= '<input type="checkbox" class="compactive" name="component['.$id.'][active]" '. (!$disabled ? 'checked="checked"' : '') .' value="'.$id.'" /></td>';
-    $str .= '<td class="delete" ><a href="javascript:void(0)" title="'.i18n_r('DELETE').' '. cl($item->title).'?" class="delcomponent" rel="'.$id.'" >&times;</a></td>';
-    $str .= '</tr></table>';
+    $str .= '<td class="compactive"><div class="form-check">';
+	$str .= '<input type="checkbox" class="form-check-input" name="component['.$id.'][active]" '. (!$disabled ? 'checked="checked"' : '') .' value="'.$id.'" />';
+	$str .= '<label class="form-check-label" for="active[]" >'.i18n_r('ACTIVE').'</label></div>';
+	$str .= '<td class="delete" ><a href="javascript:void(0)" title="'.i18n_r('DELETE').' '. cl($item->title).'?" class="delcomponent" rel="'.$id.'" >&times;</a></td>';
+	$str .= '</tr></table>';
 
     $str .= '<textarea id="editor_'.$id.'" name="component['.$id.'][val]"'.getEditorAttribCallout($collectionid, $class).'>'. stripslashes($item->value) .'</textarea>';
     $str .= '<input type="hidden" class="compslug" name="component['.$id.'][slug]" value="'. $item->slug .'" />';

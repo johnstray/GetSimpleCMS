@@ -7,7 +7,7 @@
  */
 
 /**
- * 
+ *
  * 	global array for storing all plugins greated from plugins register_plugin() call
  *  	$live_plugins[$id] = (bool) enabled
  *
@@ -41,7 +41,7 @@
  *         'priority' => priority order to execute filter,
  *	       'active'   => (bool) is processing anti-self-looping flag
  *	       'file'     => DEBUG caller filename obtained from backtrace,
- *	       'line'     => DEBUG caller line obtained from backtrace	       
+ *	       'line'     => DEBUG caller line obtained from backtrace
  *	);
  *
  * 	$pluginHooks[$hook_name][$priority][] = &$plugins[count($hook_array)-1]; # add ref to global plugin hook hash array
@@ -60,7 +60,7 @@ function loadPluginData(){
 	$live_plugins = array();
 	$plugin_info  = array();
 
-	// Check if data\other\plugins.xml exists 
+	// Check if data\other\plugins.xml exists
 	if (!file_exists(GSDATAOTHERPATH.getDef('GSPLUGINSFILE'))){
 		create_pluginsxml();
 		registerInactivePlugins(isPage('plugins'));
@@ -69,7 +69,7 @@ function loadPluginData(){
 
 	read_pluginsxml();  // get the live plugins into $live_plugins array
 	if(!is_frontend()) create_pluginsxml(isPage('plugins'));  // only on backend check that plugin files have not changed, and regen
-	
+
 	registerInactivePlugins();
 
 	if(getDef('GSPLUGINORDER',true)){
@@ -77,7 +77,7 @@ function loadPluginData(){
 		debugLog("reorder plugins".print_r($reorderplugins,true));
 		$reorderplugins = array_reverse($reorderplugins);
 		foreach($reorderplugins as $reorderplugin){
-			$live_plugins=array($reorderplugin=>$live_plugins[$reorderplugin]) + $live_plugins; 
+			$live_plugins=array($reorderplugin=>$live_plugins[$reorderplugin]) + $live_plugins;
 		}
 	}
 
@@ -97,17 +97,17 @@ function loadPluginData(){
 function registerInactivePlugins($apilookup = false){
 	GLOBAL $live_plugins,$SAFEMODE;
 	// load plugins into $plugins_info
-	$maxapi = 5; // api limit	
+	$maxapi = 5; // api limit
 	$cnt    = 0;
 	foreach ($live_plugins as $file=>$en) {
-		// debugLog("plugin: $file" . " exists: " . file_exists(GSPLUGINPATH . $file) ." enabled: " . $en); 
+		// debugLog("plugin: $file" . " exists: " . file_exists(GSPLUGINPATH . $file) ." enabled: " . $en);
 		if ($en!=='true' || !file_exists(GSPLUGINPATH . $file) || $SAFEMODE){
 			if($apilookup){
 				// check api to get names of inactive plugins etc.
 				$cached   = getDef('GSNOPLUGINCHECK',true) || $cnt>$maxapi;
 		  		$api_data = json_decode(get_api_details('plugin', $file, $cached));
 				if(is_object($api_data) && !isset($api_data->cached)) $cnt++;
-				
+
 				// on api success
 		  		if ($api_data and $api_data->status == 'successful') {
 					register_plugin( pathinfo_filename($file), $api_data->name, 'disabled', $api_data->owner, '', i18n_r('PLUGIN_DISABLED'), '', '');
@@ -117,7 +117,7 @@ function registerInactivePlugins($apilookup = false){
 
 			} else {
 				register_plugin( pathinfo_filename($file), $file, 'disabled', 'Unknown', '', i18n_r('PLUGIN_DISABLED'), '', '');
-			}  
+			}
 		}
 	}
 }
@@ -150,10 +150,10 @@ function plugin_info_update(){
 
 /**
  * change_plugin
- * 
+ *
  * Enable/Disable a plugin
  * NOTE THAT LIVE_PLUGINS USES STRINGS `true` `false`
- * 
+ *
  * @since 2.04
  * @uses $live_plugins
  *
@@ -173,7 +173,7 @@ function change_plugin($pluginid,$active=null){
 }
 
 /**
- * set a plugins active state 
+ * set a plugins active state
  * wrapper for setting plugins active inactive, since it uses string booleans and is confusing
  * @since  3.4
  * @param string $pluginid accepts pluginid or plugin filename, normalizes to filename
@@ -184,7 +184,7 @@ function setPluginState($pluginid,$state){
 
 	$pluginid = pathinfo_filename($pluginid).'.php'; // normalize to pluginid
 	if(!pluginIsInstalled($pluginid)) return; // plugin id not found
-	
+
 	$state = strToBool($state);
 
 	// save string bools
@@ -223,13 +223,13 @@ function pluginIsInstalled($pluginid){
  */
 function pluginIsActive($pluginid){
 	GLOBAL $live_plugins;
-	$pluginid = pathinfo_filename($pluginid).'.php'; // normalize to pluginid		
+	$pluginid = pathinfo_filename($pluginid).'.php'; // normalize to pluginid
 	return isset($live_plugins[$pluginid]) && ($live_plugins[$pluginid] == 'true' || $live_plugins[$pluginid] === true);
 }
 
 /**
  * read_pluginsxml
- * 
+ *
  * Read in the plugins.xml file and populate the $live_plugins array
  *
  * @since 2.04
@@ -238,8 +238,8 @@ function pluginIsActive($pluginid){
  *
  */
 function read_pluginsxml($data = null){
-  	global $live_plugins;   
-   
+  	global $live_plugins;
+
 	if(!$data) $data = getXML(GSDATAOTHERPATH . getDef('GSPLUGINSFILE'));
 	if($data){
    		$live_plugins= array(); // clean live_plugins
@@ -251,13 +251,13 @@ function read_pluginsxml($data = null){
 		}
 
 		return true;
-	} 
+	}
 }
 
 
 /**
  * create_pluginsxml
- * 
+ *
  * Read in each plugin php file and add it to the plugins.xml file.
  * read_pluginsxml() is called to populate $live_plugins
  *
@@ -326,17 +326,19 @@ function create_pluginsxml($force=false)
  * @param string $id ID of the link you are adding
  * @param string $txt Text to add to tabbed link
  * @param bool $always always show tab , else only show if current
- * @param string $icon pass in custom icons class fa-iconclass 
+ * @param string $icon pass in custom icons class fa-iconclass
  */
 
 function createSideMenu($id, $txt, $action = null, $always = true, $icon = ""){
-	$current = false;
-	if (isset($_GET['id']) && $_GET['id'] == $id && (!$action || isset($_GET[$action]))) {
-		$current = true;
-	}
-	if ($always || $current) {
-		echo '<li id="sb_'.$id.'" class="plugin_sb"><a href="load.php?id='.$id.($action ? '&amp;'.$action : '').'" '.($current ? 'class="current"' : '').' >'.(empty($icon) ? getIcon("SM_load") : getIcon("SM_",$icon))." ".$txt.'</a></li>';
-	}
+    $current = false;
+    if (isset($_GET['id']) && $_GET['id'] == $id && (!$action || isset($_GET[$action]))) {
+        $current = true;
+    }
+    if ($always || $current) {
+        echo '<a id="sb_' . $id . '" class="nav-link plugin_sb' . ($current ? ' active' : '') .
+            '" href="load.php?id=' . $id . ($action ? '&amp;' . $action : '') . '" >' .
+            (empty($icon) ? getIcon("SM_load") : getIcon("SM_",$icon)) . " " . $txt . '</a>';
+    }
 }
 
 /**
@@ -369,11 +371,11 @@ function createNavTab($tabname, $id, $txt, $action = null, $icon = "") {
  * @since 2.0
  * @uses $plugin_info
  *
- * @param string $id Unique ID of your plugin 
+ * @param string $id Unique ID of your plugin
  * @param string $name Name of the plugin
- * @param string $ver Optional, default is null. 
- * @param string $auth Optional, default is null. 
- * @param string $auth_url Optional, default is null. 
+ * @param string $ver Optional, default is null.
+ * @param string $auth Optional, default is null.
+ * @param string $auth_url Optional, default is null.
  * @param string $desc Optional, default is null.
  * @param string $type Optional, default is null. This is the page type your plugin is classifying itself
  * @param string $loaddata Optional, default is null. This is the callback funcname to run on load.php
@@ -403,7 +405,7 @@ function addPlugindebugging(&$array){
 
 	$skip          = 1; // levels to this function, from add_action/add_filter
 	$shift         = 3; // levels to plugin include, from common.php
-	
+
 	// call_user_func and call_user_func_array missing in php 7
 	if(getDef('GSBTFIX',true) && version_compare(PHP_VERSION, '7.0.0', '>=')) {
 	    $shift--;
@@ -415,7 +417,7 @@ function addPlugindebugging(&$array){
 	// if we ever load plugins some other way or chained, then we will have to use a loop to find it
 	$pathName      = pathinfo_filename($caller['file']);
 	$lineNumber    = $caller['line'];
-	
+
 	$array['file'] = $pathName.'.php';
 	$array['line'] = $lineNumber;
 	$array['core'] = !isset($live_plugins[$array['file']]);
@@ -434,7 +436,7 @@ function addPlugindebugging(&$array){
  * @param int $priority order of execution of hook, lower numbers execute earlier
  */
 function add_action($hook_name, $added_function, $args = array(), $priority = null) {
-	GLOBAL $plugins, $pluginHooks; 
+	GLOBAL $plugins, $pluginHooks;
 	return add_hook($plugins, $pluginHooks, $hook_name, $added_function, $args, $priority);
 }
 
@@ -538,7 +540,7 @@ function exec_filter_complete($data=array()){
  */
 function add_secfilter($filter_name, $added_function, $args = array(), $priority = null, $numexpectedargs = 1) {
   	global $secfilters, $securityFilters;
-	return add_hook($secfilters, $securityFilters, $filter_name, $added_function, $args, $priority, $numexpectedargs);  	
+	return add_hook($secfilters, $securityFilters, $filter_name, $added_function, $args, $priority, $numexpectedargs);
 }
 
 
@@ -619,7 +621,7 @@ function pluginhookstat($id,$hook,$active = true){
 
 	// open call, loop flag
 	if(isset($plugincallstats[$id][$hook]['active']) && $plugincallstats[$id][$hook]['active'] === true) return false;
-	
+
     // set active
 	$plugincallstats[$id][$hook]['active'] == true;
 
@@ -648,15 +650,15 @@ function prepareHookExecArgs($args,$numargs = 1){
  * exec arguments are padded or truncated as per numargs
  * return a new array of the two combined with exec args prepended `[execnumargs + hook['args']]`
  * if numargs is negative, exec args will be appended instead `[hook['args'] + execnumargs]`
- * 
+ *
  * @since  3.4
  * @param  array $hook hook item array
  * @param  array $args argument array for hook
  * @return array new array of arguments
  */
 function prepareHookCallbackArgs($hook,$args){
-	// get number of expected args, 
-	// pad or truncate, and then merge the two	
+	// get number of expected args,
+	// pad or truncate, and then merge the two
 	$callbacknumargs = (int)$hook['numargs'];
 	$args = array_pad($args,abs($callbacknumargs),'');
 	$args = array_slice($args,0,abs($callbacknumargs));
@@ -685,7 +687,7 @@ function add_hook(&$hook_array, &$hook_hash_array, $hook_name, $hook_function, $
 		$_priority = null;
 	}
 
-	if($_priority === 0) $_priority = 1; # fixup 0 
+	if($_priority === 0) $_priority = 1; # fixup 0
 	clamp($_priority,1,10,10); # clamp priority, min:1, max:10, default:10
 
 	$hook = array(
@@ -716,7 +718,7 @@ function remove_hook(&$hook_hash_array, $hook_name, $hook_function){
 
 			// check all hooks for our function
 			if($hook['function'] == $hook_function){
-				
+
 				// set hook array ref to null
 				$hook_hash_array[$hook_name][$prioritykey][$hookkey] = null;
 				// unset hook hash array
@@ -725,7 +727,7 @@ function remove_hook(&$hook_hash_array, $hook_name, $hook_function){
 				// remove priority array if empty
 				if(count($hook_hash_array[$hook_name][$prioritykey]) == 0)
 					unset($hook_hash_array[$hook_name][$prioritykey]);
-				
+
 				// remove hook array if empty
 				if(count($hook_hash_array[$hook_name]) == 0)
 					unset($hook_hash_array[$hook_name]);
@@ -741,7 +743,7 @@ function remove_hook(&$hook_hash_array, $hook_name, $hook_function){
 /**
  * Execute hook from hook_hash_array ($pluginHooks)
  * Loop hook hash array, sorting by priority
- * 
+ *
  * eg. $res = exec_hook($filters, $pluginFilters, $filter_name, 'exec_filter_callback', $data, 'exec_filter_complete');
  * eg. $res = exec_hook($plugins, $pluginHooks, $hookname, 'exec_action_callback');
  * INTERNAL USE ONLY
@@ -764,7 +766,7 @@ function exec_hook(&$hook_array, &$hook_hash_array, $hook_name, $callback = '', 
 	if(!isset($hook_hash_array[$hook_name]) || !$hook_hash_array[$hook_name]){
 		return;
 	}
-	// use ref to keep subarray priority sorts, in case we wanted to reuse again, 
+	// use ref to keep subarray priority sorts, in case we wanted to reuse again,
 	// probably sorts faster when ordered also
 	$hooks = &$hook_hash_array[$hook_name];
 	// if there is only one hook call it, skip sort and looping
@@ -777,7 +779,7 @@ function exec_hook(&$hook_array, &$hook_hash_array, $hook_name, $callback = '', 
 			$res = $callback($hook[0],$data);
 			// if callback call it
 			if(function_exists($complete)) return $complete($data);
-			return $res;		
+			return $res;
 		}
 	}
 
@@ -814,7 +816,7 @@ function exec_action_legacy($a) {
 		debugLog("plugins array is empty");
 		return;
 	}
-	
+
 	foreach ($plugins as $hook)	{
 		if ($hook['hook'] == $a) {
 			call_user_func_array($hook['function'], $hook['args']);
@@ -835,7 +837,7 @@ function exec_action_legacy($a) {
  */
 function exec_filter_legacy($script,$data=array()) {
 	global $filters;
-	
+
 	if(!$filters){
 		debugLog("filters array is empty");
 		return $data;

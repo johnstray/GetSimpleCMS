@@ -129,6 +129,9 @@ if (in_array($currentTab, $tabs) === false) {
                     /** @hook: nav-tab - Backend tabs (from plugins) after navigation tab list output */
                     exec_action('nav-tab');
                     ?>
+                    <li id="nav_loaderimg" class="nav-item">
+                        <img class="toggle" id="loader" src="template/images/ajax.gif" alt="" />
+                    </li>
                 </ul>
             </div>
         </div>
