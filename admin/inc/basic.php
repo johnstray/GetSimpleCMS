@@ -933,10 +933,10 @@ function copy_file($src,$dest,$filename = null)
  *
  * @since 3.4
  *
- * @param  str $file file to delete
+ * @param  string $file file to delete
  * @return bool       success
  */
-function delete_file($file)
+function delete_file((string) $file)
 {
     $status = unlink($file); // php unlink
     return fileLog(__FUNCTION__, $status, $file);
@@ -1024,7 +1024,7 @@ function formatDate(string $format, ?string $timestamp = null, bool $uselocale =
 {
 
     /**
- * @deprecated: Argument is not used, any plugins passing this argument should be updated to not pass it 
+ * @deprecated: Argument is not used, any plugins passing this argument should be updated to not pass it
 */
     if ($uselocale) {$uselocale = false;
     }
@@ -1035,7 +1035,7 @@ function formatDate(string $format, ?string $timestamp = null, bool $uselocale =
 
     if (strpos($format, '%') !== false) {
         /**
- * @deprecated Old strftime format no longer supported 
+ * @deprecated Old strftime format no longer supported
 */
         return false;
     }
@@ -2794,7 +2794,7 @@ function includeTheme($template, $template_file = GSTEMPLATEFILE, $functions = t
     }
 
     // include the template and template file set within theme.php and each page
-    if ((!file_exists(GSTHEMESPATH .$template."/".$template_file)) || ($template_file == '') ) { $template_file = GSTEMPLATEFILE; 
+    if ((!file_exists(GSTHEMESPATH .$template."/".$template_file)) || ($template_file == '') ) { $template_file = GSTEMPLATEFILE;
     }
     include GSTHEMESPATH .$template."/".$template_file;
 }

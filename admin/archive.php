@@ -1,8 +1,9 @@
-<?php 
+<?php
+
 /**
  * Archive
  *
- * Displays and starts the website archives 	
+ * Displays and starts the website archives
  *
  * @package GetSimple
  * @subpackage Backups
@@ -21,81 +22,113 @@ exec_action('load-archive');
 $table = '';
 
 // if a backup needs to be created
-if(isset($_GET['do'])) {
-	check_for_csrf("create");
-	exec_action('archive-backup'); // @hook archive-backup create backup archive requested
-	redirect('zip.php?s='.$SESSIONHASH);
+if (isset($_GET['do'])) {
+    check_for_csrf("create");
+    exec_action('archive-backup'); // @hook archive-backup create backup archive requested
+    redirect('zip.php?s=' . $SESSIONHASH);
 }
 
 // if a backup has just been created
-if(isset($_GET['done'])) {
-	$success = i18n_r('SUCC_WEB_ARCHIVE');
+if (isset($_GET['done'])) {
+    $success = i18n_r('SUCC_WEB_ARCHIVE');
 }
 
-if(isset($_GET['nozip'])) {
-	$error = i18n_r('NO_ZIPARCHIVE'). ' - <a href="health-check.php">'.i18n_r('WEB_HEALTH_CHECK').'</a>';
+if (isset($_GET['nozip'])) {
+    $error = i18n_r('NO_ZIPARCHIVE') . ' - <a href="health-check.php">' . i18n_r('WEB_HEALTH_CHECK') . '</a>';
 }
 
-$pagetitle = i18n_r('WEBSITE_ARCHIVES').' &middot; '.i18n_r('BAK_MANAGEMENT');
+$pagetitle = i18n_r('WEBSITE_ARCHIVES') . ' &middot; ' . i18n_r('BAK_MANAGEMENT');
 get_template('header');
 
 ?>
-	
+
 <?php include('template/include-nav.php'); ?>
 
-<div class="bodycontent clearfix">
-	
-	<div id="maincontent">
-		<div class="main" >
-		<h3 class="floated"><?php i18n('WEBSITE_ARCHIVES');?></h3>
-		<div class="edit-nav clearfix" >
-    		<a id="waittrigger" href="archive.php?do&amp;nonce=<?php echo get_nonce("create"); ?>" accesskey="<?php echo find_accesskey(i18n_r('ASK_CREATE_ARC'));?>" title="<?php i18n('CREATE_NEW_ARC');?>" ><?php i18n('ASK_CREATE_ARC');?></a>
-			<?php exec_action(get_filename_id().'-edit-nav'); ?>
-		</div>
-		<?php exec_action(get_filename_id().'-body'); ?>		
-		<p style="display:none" id="waiting" ><?php i18n('CREATE_ARC_WAIT');?></p>
-		<table class="highlight paginate">
-			<thead>
-				<tr><th><?php i18n('ARCHIVE_DATE'); ?></th><th style="text-align:right;" ><?php i18n('FILE_SIZE'); ?></th><th></th></tr>
-			</thead>
-			<tbody>
-			<?php
-				$count="0";
-				$path = tsl(GSBACKUPSPATH .'zip/');
-				
-				$filenames = getFiles($path);
-	
-				natsort($filenames);
-				rsort($filenames);
-				
-				foreach ($filenames as $file) {
-					if($file[0] != "." ) {
-						$timestamp = explode('_', $file);
-						$name = output_datetime($timestamp[0]);
-						clearstatcache();
-						$ss   = stat($path . $file);
-						$size = fSize($ss['size']);
-						if(!getdef('GSALLOWDOWNLOADS',true)) $download_link = $name;
-						else $download_link = '<a title="'.i18n_r('DOWNLOAD_ARCHIVES').' '. $name .'" href="download.php?file='. $path . $file .'&amp;nonce='.get_nonce("archive", "download.php").'">'.$name .'</a>';
-						echo '<tr>
-								<td>'.$download_link.'</td>
-								<td style="width:70px;text-align:right;" ><span>'.$size.'</span></td>
-								<td class="delete" ><a class="delconfirm" title="'.i18n_r('DELETE_ARCHIVE').': '. $name .'?" href="deletefile.php?zip='. $file .'&amp;nonce='.get_nonce("delete", "deletefile.php").'">&times;</a></td>
-							  </tr>';
-						$count++;
-					}
-				}
-			?>
-			</tbody>
-			</table>
-			<p><em><b><span id="pg_counter"><?php echo $count; ?></span></b> <?php i18n('TOTAL_ARCHIVES');?></em></p>
-			<?php if(!getdef('GSALLOWDOWNLOADS',true)) echo '<p><em class="hint">' . i18n_r('ARCHIVE_DL_DISABLED').'</em></p>' ; ?>
-		</div>
-	</div>
-	
-	<div id="sidebar" >
-		<?php include('template/sidebar-backups.php'); ?>
-	</div>
+    <main id="maincontent" class="col-lg-9" role="main">
+        <div class="main">
+            <h3 class="floated"><?php i18n('WEBSITE_ARCHIVES');?></h3>
+            <div class="edit-nav clearfix" >
+                <a id="waittrigger" href="archive.php?do&amp;nonce=<?php echo get_nonce("create"); ?>"
+                    accesskey="<?php echo find_accesskey(i18n_r('ASK_CREATE_ARC'));?>"
+                    title="<?php i18n('CREATE_NEW_ARC');?>" >
+                    <?php i18n('ASK_CREATE_ARC');?>
+                </a>
+                <?php exec_action(get_filename_id() . '-edit-nav'); ?>
+            </div>
 
-</div>
+            <?php exec_action(get_filename_id() . '-body'); ?>
+
+            <p style="display:none" id="waiting" ><?php i18n('CREATE_ARC_WAIT');?></p>
+
+            <table class="table table-striped table-hover paginate">
+                <thead>
+                    <tr>
+                        <th><?php i18n('ARCHIVE_DATE'); ?></th>
+                        <th style="text-align:right;" ><?php i18n('FILE_SIZE'); ?></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $count = "0";
+                    $path = tsl(GSBACKUPSPATH . 'zip/');
+
+                    $filenames = getFiles($path);
+
+                    natsort($filenames);
+                    rsort($filenames);
+
+                    foreach ($filenames as $file) {
+                        if ($file[0] != ".") {
+                            $timestamp = explode('_', $file);
+                            $name = output_datetime($timestamp[0]);
+                            clearstatcache();
+                            $ss   = stat($path . $file);
+                            $size = fSize($ss['size']);
+                            if (!getdef('GSALLOWDOWNLOADS', true)) {
+                                $download_link = $name;
+                            } else {
+                                $download_link = '<a title="' . i18n_r('DOWNLOAD_ARCHIVES') . ' ' . $name . '"
+                                    href="download.php?file=' . $path . $file . '&amp;nonce=' .
+                                    get_nonce("archive", "download.php") . '">' .
+                                    $name . '</a>';
+                            }
+                            echo '<tr>
+                                    <td>' . $download_link . '</td>
+                                    <td><span>' . $size . '</span></td>
+                                    <td class="delete" >
+                                        <a class="delconfirm" title="' . i18n_r('DELETE_ARCHIVE') . ': ' . $name . '?"
+                                            href="deletefile.php?zip=' . $file . '&amp;nonce=' .
+                                            get_nonce("delete", "deletefile.php") . '">
+                                            &times;
+                                        </a>
+                                    </td>
+                                </tr>';
+                            $count++;
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+
+            <p class="small text-center mb-0">
+                <em>
+                    <b><span id="pg_counter"><?php echo $count; ?></span></b>
+                    <?php i18n('TOTAL_ARCHIVES');?>
+                </em>
+            </p>
+            <?php if (!getdef('GSALLOWDOWNLOADS', true)) { ?>
+                <p class="small text-center mb-0">
+                    <em class="hint">
+                        <?php echo i18n_r('ARCHIVE_DL_DISABLED'); ?>
+                    </em>
+                </p>
+            <?php } ?>
+        </div>
+    </main>
+
+    <aside id="sidebar" class="col-lg-3" role="navigation">
+        <?php include('template/sidebar-backups.php'); ?>
+    </aside>
+
 <?php get_template('footer'); ?>
