@@ -1,28 +1,27 @@
 <?php
-if (!defined('IN_GS')) {
-    die('you cannot load this page directly.');
-}
 
 /**
  * Sidebar Plugins Template
  *
  * @package GetSimple
+ * @subpackage Plugins
  */
-?>
-<ul class="snav">
-    <li id="sb_plugins">
-        <a href="plugins.php" <?php check_menu('plugins');  ?>
-            accesskey="<?php echo find_accesskey(i18n_r('SHOW_PLUGINS'));?>" >
-            <?php i18n('SHOW_PLUGINS'); ?>
-        </a>
-    </li>
-    <li id="sb_extend" class="last_sb">
-        <a href="<?php echo $site_link_back_url; ?>extend/" target="_blank"
-            accesskey="<?php echo find_accesskey(i18n_r('GET_PLUGINS_LINK'));?>" >
-            <?php i18n('GET_PLUGINS_LINK'); ?>
-        </a>
-    </li>
-    <?php exec_action("plugins-sidebar"); // @hook plugins-sidebar sidebar list html output  ?>
-</ul>
+
+if (defined('IN_GS') === false) {
+    die('You cannot load this file directly!');
+} ?>
+
+<nav class="nav flex-column">
+    <a id="sb_plugins" class="nav-link<?php echo isPage('plugins') ? ' active' : ''; ?>"
+        href="plugins.php" accesskey="<?php echo find_accesskey(i18n_r('SHOW_PLUGINS'));?>" >
+        <?php i18n('SHOW_PLUGINS'); ?>
+    </a>
+    <a id="sb_extend" class="nav-link" href="<?php echo $site_link_back_url; ?>extend/" target="_blank"
+        accesskey="<?php echo find_accesskey(i18n_r('GET_PLUGINS_LINK'));?>" >
+        <?php i18n('GET_PLUGINS_LINK'); ?>
+    </a>
+
+    <?php exec_action('plugins-sidebar'); // @hook sidebar-navigation additional sidebar navigation links ?>
+</nav>
 
 <p id="js_submit_line" ></p>
