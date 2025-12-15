@@ -96,6 +96,8 @@ $GScontainer = in_array('wide', explode(',', $GSSTYLE)) ? 'container-fluid' : 'c
         <?php } ?>
 
         <?php exec_action('footer-body-end'); /** @hook footer-body-end - Before HTML body closing */ ?>
+
+        <script src="template/bootstrap/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
 <?php exec_action('footer-end'); /** @hook: footer-end the end before php flushes its output */ ?>
