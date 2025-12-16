@@ -70,7 +70,7 @@ function clean_img_name($text)
 function to7bit($text, $from_enc = "UTF-8")
 {
     $text = doTransliteration($text); // use i18n transliteration table to convert
-    $text = htmlspecialchars_decode(htmlentities($text, ENT_COMPAT, 'utf-8', false));
+    $text = htmlspecialchars_decode(htmlentities((string)$text, ENT_COMPAT, 'utf-8', false));
 
     // replace basic latin if transliteration failed
     // sz/ligatures, *ligatures, o/u/a/umlauts, any?
@@ -3197,13 +3197,14 @@ function getDefaultLang()
  * perform transliteration conversion on string
  *
  * @since  3.4
- * @param  str $str string to convert
- * @return string     str after transliteration replacement array ran on it
+ * @param  strign $str string to convert
+ * @return string $str after transliteration replacement array ran on it
  */
 function doTransliteration($str)
 {
-    if (getTransliteration() && is_array($translit=getTransliteration()) && count($translit)>0) {
-        $str = str_replace(array_keys($translit), array_values($translit), $str);
+    $translit = getTransliteration();
+    if ($translit && is_array($translit) && count($translit) > 0) {
+        $str = str_replace(array_keys($translit), array_values($translit), (string) $str);
     }
     return $str;
 }
