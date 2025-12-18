@@ -5,8 +5,8 @@
  *
  * @Date:       2013-2-1
  * @Version:    GetSimple 3.4.0
- * @Traductors: Chris Cagle 
- * 
+ * @Traductors: Chris Cagle
+ *
  * @url:        http://get-simple.info
  * @package     GetSimple
  * @subpackage  Language
@@ -14,7 +14,7 @@
 
 $i18n = array(
 
-/* 
+/*
 * For: install.php
 */
 "PHPVER_ERROR"            =>	"<b>Unable to continue:</b> PHP 5.2 or greater is required, you have ",
@@ -49,7 +49,7 @@ $i18n = array(
 "SITE_UPDATED"            =>	"Your site has been updated",
 "SERVICE_UNAVAILABLE"     =>	"This page is temporarily unavailable",
 
-/* 
+/*
 * For: pages.php
 */
 "MENUITEM_SUBTITLE"       =>	"menu item",
@@ -115,7 +115,7 @@ $i18n = array(
 "OPTIONS"                 =>	"Options",
 "META"                    =>	"Meta",
 
-/* 
+/*
 * For: upload.php
 */
 "ERROR_UPLOAD"            =>	"There was a problem with the file upload",
@@ -129,12 +129,12 @@ $i18n = array(
 "FILE_EXISTS_PROMPT"      =>    "File Exists, Overwrite?",
 "FILES"                   =>    "files",
 
-/* 
+/*
 * For: logout.php
 */
 "MSG_LOGGEDOUT"           =>	"You are now logged out.",
 
-/* 
+/*
 * For: index.php
 */
 "LOGIN"                   =>	"Login",
@@ -143,13 +143,13 @@ $i18n = array(
 "FORGOT_PWD"              =>	"Forgot your password?",
 "CONTROL_PANEL"           =>	"Control Panel Login",
 
-/* 
+/*
 * For: navigation.php
 */
 "CURRENT_MENU"            =>	"Current Menu",
 "NO_MENU_PAGES"           =>	"There are no pages that are set to appear within the main menu",
 
-/* 
+/*
 * For: theme-edit.php
 */
 "TEMPLATE_FILE"           =>	"Template file <b>%s</b> has successfully been updated!",
@@ -159,8 +159,8 @@ $i18n = array(
 "BTN_SAVECHANGES"         =>	"Save Changes",
 "THEME_ROOT"              =>    "Configuration Files",
 "UNSAVED_PROMPT"          =>    "This page has unsaved changes, continue anyway ?",
- 
-/* 
+
+/*
 * For: support.php
 */
 "SETTINGS_UPDATED"        =>	"Your settings have been updated",
@@ -172,7 +172,7 @@ $i18n = array(
 "VIEW_FAILED_LOGIN"       =>	"View Failed Login Attempts",
 
 
-/* 
+/*
 * For: log.php
 */
 "MSG_HAS_BEEN_CLR"        =>	" has been cleared",
@@ -185,7 +185,7 @@ $i18n = array(
 "LOG_FILE_ENTRY"          =>	"LOG FILE ENTRY",
 "THIS_COMPUTER"           =>	"This Computer",
 
-/* 
+/*
 * For: backup-edit.php
 */
 "BAK_MANAGEMENT"          =>	"Backup Management",
@@ -201,7 +201,7 @@ $i18n = array(
 "PERMS"                   =>	"Perms",
 "RESTOREERROR"            =>    "Restore Failed",
 
-/* 
+/*
 * For: components.php
 */
 "COMPONENTS"              =>	"Components",
@@ -211,7 +211,7 @@ $i18n = array(
 "ACTIVE"                  =>	"Active",
 "COMPONENT_DELETED"       =>    "Component will be deleted upon next save <b>%s</b>",
 
-/* 
+/*
 * For: snippets.php
 */
 "SNIPPETS"                =>	"Snippets",
@@ -220,14 +220,14 @@ $i18n = array(
 "ADD_SNIPPET"             =>	"<em>A</em>dd Snippet", // 'a' is the accesskey identifier
 "SAVE_SNIPPETS"           =>	"Save Snippets",
 
-/* 
+/*
 * For: sitemap.php
 */
 "SITEMAP_ERROR"           =>	"Your sitemap could not be generated",
 "SITEMAP_REFRESHED"       =>	"Your sitemap has been refreshed",
 "VIEW_SITEMAP"            =>    "View Sitemap",
 
-/* 
+/*
 * For: theme.php
 */
 "THEME_CHANGED"           =>	"Your theme has been changed successfully",
@@ -236,7 +236,7 @@ $i18n = array(
 "THEME_SCREENSHOT"        =>	"Theme Screenshot",
 "THEME_PATH"              =>	"Active Theme Folder Location",
 
-/* 
+/*
 * For: resetpassword.php
 */
 "RESET_PASSWORD"          =>	"Reset Password",
@@ -246,7 +246,7 @@ $i18n = array(
 "MSG_PLEASE_EMAIL"        =>	"Please enter the username registered on this system, and a new password will be sent to its email address.",
 "SEND_NEW_PWD"            =>	"Send New Password",
 
-/* 
+/*
 * For: settings.php
 */
 "GENERAL_SETTINGS"        =>	"General Settings",
@@ -310,12 +310,12 @@ $i18n = array(
 "NA"                      =>	"N/A",
 "DEBUG_INFO"              =>    "Debug Mode is enabled, for more information about debug mode see ",
 
-/* 
+/*
 * For: footer.php
 */
 "POWERED_BY"              =>	"Powered by",
 
-/* 
+/*
 * For: backups.php
 */
 "PAGE_BACKUPS"            =>	"Page Backups",
@@ -323,7 +323,7 @@ $i18n = array(
 "DELETE_ALL_BAK"          =>	"Delete all backups?",
 "TOTAL_BACKUPS"           =>	"total backups",
 
-/* 
+/*
 * For: archive.php
 */
 "SUCC_WEB_ARCHIVE"        =>	"An archive of your website has been successfully created",
@@ -338,7 +338,7 @@ $i18n = array(
 "TOTAL_ARCHIVES"          =>	"total archives",
 "ARCHIVE_DL_DISABLED"     =>	"Archive Downloads are Currently Disabled",
 
-/* 
+/*
 * For: include-nav.php
 */
 "WELCOME"                 =>	"Welcome", // used as 'Welcome USERNAME!'
@@ -366,14 +366,14 @@ $i18n = array(
 "PLUGINS_NAV"             =>	"Plu<em>g</em>ins", // legacy
 "TAB_FILES"               =>	"F<em>i</em>les", // legacy
 
-/* 
+/*
 * For: sidebar-files.php
 */
 "BROWSE_COMPUTER"         =>	"Browse Your Computer",
 "UPLOAD"                  =>	"Upload",
 "DROP_FILES"              =>	"Drop Files to upload</br><small>(or click)</small>",
 
-/* 
+/*
 * For: sidebar-support.php
 */
 "SIDE_SUPPORT_LOG"        =>	"Supp<em>o</em>rt Resources",
@@ -381,7 +381,7 @@ $i18n = array(
 "SIDE_DOCUMENTATION"      =>	"Wiki Documentation", // not a sidemenu
 "SIDE_VIEW_LOG"           =>	"<em>V</em>iew Logs",
 
-/* 
+/*
 * For: sidebar-theme.php
 */
 "SIDE_VIEW_SITEMAP"       =>	"<em>V</em>iew Sitemap",
@@ -391,26 +391,26 @@ $i18n = array(
 "SIDE_EDIT_THEME"         =>	"Edit T<em>h</em>eme",
 "SIDE_CHOOSE_THEME"       =>	"Choose <em>T</em>heme",
 
-/* 
+/*
 * For: sidebar-pages.php
 */
 "SIDE_CREATE_NEW"         =>	"<em>C</em>reate New Page",
 "SIDE_VIEW_PAGES"         =>	"View All <em>P</em>ages",
 
-/* 
+/*
 * For: sidebar-settings.php
 */
 "SIDE_GEN_SETTINGS"       =>	"General <em>S</em>ettings",
 "SIDE_USER_PROFILE"       =>	"<em>U</em>ser Profile",
 
-/* 
+/*
 * For: sidebar-backups.php
 */
 "SIDE_VIEW_BAK"           =>	"View Page Backup", // not a sidemenu
 "SIDE_WEB_ARCHIVES"       =>	"<em>W</em>ebsite Archives",
 "SIDE_PAGE_BAK"           =>	"Page <em>B</em>ackups",
 
-/* 
+/*
 * For: error_checking.php
 */
 "ER_PWD_CHANGE"           =>	"Don't forget to <a href=\"%s\">change your password</a> from that random generated one you have now...",
@@ -438,13 +438,13 @@ $i18n = array(
 "ER_SAFEMODE"             =>    "Safe Mode is Active",
 "ER_SAFEMODE_DISALLOW"    =>    "Operation not allowed in Safe Mode",
 
-/* 
+/*
 * For: changedata.php
 */
 "CANNOT_SAVE_EMPTY"       =>	"You cannot save a page with an empty title",
 "META_DESC"               =>	"Meta Description",
 
-/* 
+/*
 * For: template_functions.php
 */
 "FTYPE_COMPRESSED"        =>	"Compressed", // file-type archive
@@ -461,15 +461,18 @@ $i18n = array(
 
 "FTYPE_DOCUMENTS"         =>	"Documents",  // LEGACY file-type document, do not use
 
-/* 
+/*
 * For: login_functions.php
 */
 "FILL_IN_REQ_FIELD"       =>	"Please fill in all the required fields",
 "LOGIN_FAILED"            =>	"Login failed. Please double check your Username and Password",
 "INVALID_PASSWORD"        =>    "Invalid Password",
 "INVALID_USER"            =>    "Invalid User",
+"USERNAME_REQUIRED"       =>	"Username is required",
+"PASSWORD_REQUIRED"       =>	"Password is required",
+"REMEMBER_ME"             =>  "Remember Username?",
 
-/* 
+/*
 * For: Locale and Date Format
 */
 "LOCALE"                  =>	"en_US",           // locale to use
@@ -477,7 +480,7 @@ $i18n = array(
 "DATE_AND_TIME_FORMAT"    =>	"F jS, Y - g:i A", // date and time format
 "TIME_FORMAT"             =>	"g:i A",           // time only format
 
-/* 
+/*
 * For: support.php
 */
 "WELCOME_MSG"             =>	"Thank you for choosing GetSimple as your content management system!",
@@ -485,7 +488,7 @@ $i18n = array(
 "GETTING_STARTED"         =>	"Getting Started",
 "CSRF"                    =>    "CSRF Detected!",
 
-/* 
+/*
 * For: image.php
 */
 
@@ -505,7 +508,7 @@ $i18n = array(
 "LINK_THUMBNAIL"          =>	"Thumbnail Link",
 "HTML_THUMB_ORIG"         =>	"Thumbnail-to-Image HTML",
 
-/* 
+/*
 * For: plugins.php
 */
 
@@ -524,7 +527,7 @@ $i18n = array(
 * SINCE Version 3.0
 ***********************************************************************************/
 
-/* 
+/*
 * For: setup.php
 */
 
@@ -542,7 +545,7 @@ $i18n = array(
 * Misc Cleanup Work
 */
 
-# new to 3.0 
+# new to 3.0
 "HOMEPAGE_DELETE_ERROR"   =>	"You cannot delete your homepage", //deletefile
 "NO_ZIPARCHIVE"           =>	"ZipArchive extension is not installed. Unable to continue", //zip
 "REDIRECT_MSG"            =>	"If your browser does not redirect you, click <a href=\"%s\">here</a>", //basic
@@ -575,8 +578,8 @@ $i18n = array(
 "FILE_NAME"               =>	"File Name", //multiple tr header rows
 "FILE_SIZE"               =>	"Size", //multiple tr header rows
 "ARCHIVE_DATE"            =>	"Archive Date", //archive.php
-"CKEDITOR_LANG"           =>	"en", // edit.php ; set CKEditor language, don't forget to include CKEditor language file in translation zip	
-# new to 3.1 
+"CKEDITOR_LANG"           =>	"en", // edit.php ; set CKEditor language, don't forget to include CKEditor language file in translation zip
+# new to 3.1
 "XML_INVALID"             =>	"XML Invalid", //template-functions.php
 "XML_VALID"               =>	"XML Valid",
 "UPDATE_AVAILABLE"        =>	"Update to", //plugins.php
@@ -604,7 +607,7 @@ $i18n = array(
 "MENU_MANAGER_SUCCESS"    =>	"The new menu order has been saved", //menu-manager.php
 "MINIMIZENOTIFY"          =>    "Editing in fullscreen, press F11 or ESC to minimize",
 
-/* 
+/*
 * For: api related pages
 */
 "API_ERR_MISSINGPARAM"    =>	'parameter data does not exist',
@@ -644,7 +647,7 @@ $i18n = array(
   "ů"=>"u","Ů"=>"u","ť"=>"t","Ť"=>"t",
   "ď"=>"d","Ď"=>"d","ň"=>"n","Ň"=>"n",
   //special Slovakian chars with diacritics (except some)
-  "ĺ"=>"l","ľ"=>"l","ŕ"=>"r", 
+  "ĺ"=>"l","ľ"=>"l","ŕ"=>"r",
   "Ĺ"=>"l","Ľ"=>"L","Ŕ"=>"r",
   // Polish
   "Ą"=>"a","Ć"=>"c","Ę"=>"e",
@@ -667,7 +670,7 @@ $i18n = array(
   "о"=>"o","п"=>"p","р"=>"r","с"=>"s","т"=>"t",
   "у"=>"u","ф"=>"f","х"=>"h","ц"=>"c","ч"=>"ch",
   "ш"=>"sh","щ"=>"shh","ъ"=>"","ы"=>"y","ь"=>"",
-  
+
   "э"=>"e","ю"=>"yu","я"=>"ya"
 ),
 
@@ -777,7 +780,7 @@ $i18n = array(
 
 // already defined generics
 # "ENABLE"                =>    "Activate"
-# "DISABLE"               =>	"Deactivate", //plugins.php 
+# "DISABLE"               =>	"Deactivate", //plugins.php
 # "UNDO"                  =>	"Undo",
 # "YES"                   =>	"Yes",
 # "NO"                    =>	"No",
