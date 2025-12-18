@@ -138,6 +138,10 @@ if (in_array($currentTab, $tabs) === false) {
     </nav>
 </header>
 
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <?php include 'toast-messages.php'; ?>
+</div>
+
 <div class="<?php echo $GScontainer; ?> py-5">
     <?php require 'template/error_checking.php'; ?>
     <div class="row row-gap-5">
