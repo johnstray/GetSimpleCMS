@@ -1474,59 +1474,56 @@ function get_pages_menu_dropdown($parentitem, $menu, $level, $id = null, $idleve
  *
  * @returns string
  */
-function get_api_details($type='core', $args=null, $cached = false)
+function get_api_details($type = 'core', $args = null, $cached = false)
 {
-    GLOBAL $debugApi,$nocache,$nocurl;
+    global $debugApi, $nocache, $nocurl, $site_link_back_url, $api_url;
 
-    include GSADMININCPATH.'configuration.php';
+    include GSADMININCPATH . 'configuration.php';
     // $nocache = true;
 
-    if($cached) {
+    if ($cached) {
         debug_api_details("API REQEUSTS DISABLED, using cache files only");
     }
 
     // core api details
-    if ($type=='core') {
-        // core version request, return status 0-outdated,1-current,2-bleedingedge
-        $fetch_this_api = $api_url .'?v='.GSVERSION;
-    }
-    else if ($type=='plugin' && $args) {
-        // plugin api details. requires a passed plugin i
-        $apiurl = $site_link_back_url.'api/extend/?file=';
+    if ($type == 'core') {
+        // core version request, return status 0-outdated, 1-current, 2-bleedingedge
+        $fetch_this_api = $api_url . '?v=' . GSVERSION;
+    } elseif ($type == 'plugin' && $args) {
+        // plugin api details. requires a passed plugin
+        $apiurl = $site_link_back_url . 'api/extend/plugins.php?file=';
         $fetch_this_api = $apiurl.$args;
-    }
-    else if ($type=='custom' && $args) {
+    } elseif ($type == 'custom' && $args) {
         // custom api details. requires a passed url
         $fetch_this_api = $args;
-    } else { return;
+    } else {
+        return;
     }
 
-    // get_execution_time();
-    debug_api_details("type: " . $type. " " .$args);
+    debug_api_details("type: " . $type . " " . $args);
     debug_api_details("address: " . $fetch_this_api);
 
-    // debug_api_details(debug_backtrace());
-
-    if(!isset($api_timeout) or (int)$api_timeout<100) { $api_timeout = 500; // default and clamp min to 100ms
+    if (!isset($api_timeout) or (int)$api_timeout<100) {
+        $api_timeout = 500; // default and clamp min to 100ms
     }
-    debug_api_details("timeout: " .$api_timeout);
+    debug_api_details("timeout: " . $api_timeout);
 
     // check to see if cache is available for this
-    $cachefile = md5($fetch_this_api).'.txt';
+    $cachefile = md5($fetch_this_api) . '.txt';
     $cacheExpireSecs = 3 * (86400); // minutes, 3 days
-    // $cacheExpireSecs = 60; // 1 minute
 
-    if(!$nocache || $cached) { debug_api_details('cache file check - ' . $fetch_this_api.' ' .$cachefile);
-    } else { debug_api_details('cache check: disabled');
+    if (!$nocache || $cached) {
+        debug_api_details('cache file check - ' . $fetch_this_api . ' ' . $cachefile);
+    } else {
+        debug_api_details('cache check: disabled');
     }
 
-    $cacheAge = file_exists(GSCACHEPATH.$cachefile) ? filemtime(GSCACHEPATH.$cachefile) : '';
+    $cacheAge = file_exists(GSCACHEPATH . $cachefile) ? filemtime(GSCACHEPATH . $cachefile) : '';
     debug_api_details('cache file tstamp: ' . output_datetime($cacheAge, true));
 
-
     // api disabled and no cache file exists
-    if($cached && empty($cacheAge)) {
-        debug_api_details('cache file does not exist - ' . GSCACHEPATH.$cachefile);
+    if ($cached && empty($cacheAge)) {
+        debug_api_details('cache file does not exist - ' . GSCACHEPATH . $cachefile);
         debug_api_details();
         return '{"status":-1}';
     }
@@ -1535,24 +1532,25 @@ function get_api_details($type='core', $args=null, $cached = false)
         // grab the api results from the cache
         debug_api_details('cache file time - ' . $cacheAge . ' (' . (time() - $cacheAge) . ' seconds ago)');
         $data = read_file(GSCACHEPATH.$cachefile);
-        debug_api_details('returning cache file - ' . GSCACHEPATH.$cachefile);
-    }
-    else {
+        debug_api_details('returning cache file - ' . GSCACHEPATH . $cachefile);
+    } else {
         // make the api call
         if (function_exists('curl_init') && function_exists('curl_exec') && !$nocurl) {
 
             // USE CURL
             $ch = curl_init();
 
-            if(!$ch) {
+            if (!$ch) {
                 debug_api_details("curl init failed");
                 return;
             }
 
             // define missing curlopts php<5.2.3
-            if(!defined('CURLOPT_CONNECTTIMEOUT_MS')) { define('CURLOPT_CONNECTTIMEOUT_MS', 156);
+            if (!defined('CURLOPT_CONNECTTIMEOUT_MS')) {
+                define('CURLOPT_CONNECTTIMEOUT_MS', 156);
             }
-            if(!defined('CURLOPT_TIMEOUT_MS')) { define('CURLOPT_TIMEOUT_MS', 155);
+            if (!defined('CURLOPT_TIMEOUT_MS')) {
+                define('CURLOPT_TIMEOUT_MS', 155);
             }
 
             // min cURL 7.16.2
@@ -1567,14 +1565,14 @@ function get_api_details($type='core', $args=null, $cached = false)
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_AUTOREFERER, true);
 
-            if($debugApi) {
+            if ($debugApi) {
 
                 $curllog = false;
-                if($curllog) {
-                    $verbose = fopen(GSDATAOTHERPATH .'logs/curllog.txt', 'w+');
+                if ($curllog) {
+                    $verbose = fopen(GSDATAOTHERPATH . 'logs/curllog.txt', 'w+');
                     curl_setopt($ch, CURLOPT_WRITEHEADER, $verbose);
-                }
-                else { $verbose = tmpfile();
+                } else {
+                    $verbose = tmpfile();
                 }
 
                 curl_setopt($ch, CURLOPT_HEADER, true);
@@ -1585,7 +1583,7 @@ function get_api_details($type='core', $args=null, $cached = false)
 
             $data = curl_exec($ch);
 
-            if($debugApi) {
+            if ($debugApi) {
                 debug_api_details("using curl");
                 debug_api_details("curl version: ");
                 debug_api_details(print_r(curl_version(), true));
@@ -1594,7 +1592,7 @@ function get_api_details($type='core', $args=null, $cached = false)
                 debug_api_details(print_r(curl_getinfo($ch), true));
 
                 if (!$data) {
-                    debug_api_details("curl error number: " .curl_errno($ch));
+                    debug_api_details("curl error number: " . curl_errno($ch));
                     debug_api_details("curl error: " . curl_error($ch));
                 }
 
@@ -1610,41 +1608,38 @@ function get_api_details($type='core', $args=null, $cached = false)
 
             }
             curl_close($ch);
-        }
-        else if(ini_get('allow_url_fopen')) {
+        } elseif(ini_get('allow_url_fopen')) {
             // USE FOPEN
             debug_api_details("using fopen");
             $timeout = $api_timeout / 1000; // ms to float seconds
-            // $context = stream_context_create();
-            // stream_context_set_option ( $context, array('http' => array('timeout' => $timeout)) );
             $context = stream_context_create(array('http' => array('timeout' => $timeout)));
             $data = read_file($fetch_this_api, false, $context);
-            debug_api_details("fopen data: " .$data);
-        }
-        else {
+            debug_api_details("fopen data: " . $data);
+        } else {
             debug_api_details("No api methods available");
             debug_api_details();
             return;
         }
 
-        // debug_api_details("Duration: ".get_execution_time());
+        debug_api_details("Duration: " . get_execution_time());
 
         $response = json_decode($data);
         debug_api_details('JSON:');
         debug_api_details(print_r($response, true), '');
 
-        if($response) { $response->cached = true; // add cache flag
+        if ($response) {
+            $response->cached = true; // add cache flag
         } else{
             // if response is invalid set status to -1 error
             // and we pass on our own data, it is also cached to prevent constant rechecking
-            if(!$response) {
+            if (!$response) {
                 $response = array();
                 $response["status"] = -1;
                 $response["cached"] = true;
             }
         }
         debug_api_details($data);
-        save_file(GSCACHEPATH.$cachefile, json_encode($response));
+        save_file(GSCACHEPATH . $cachefile, json_encode($response));
         debug_api_details();
         return $data;
     }
