@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Download Files
  *
@@ -8,7 +8,7 @@
  * @package GetSimple
  * @subpackage Download
  */
- 
+
 // Setup inclusions
 $load['plugin'] = true;
 
@@ -21,7 +21,7 @@ if(getdef('GSALLOWDOWNLOADS',true) === false) die(i18n('NOT_ALLOWED'));
 
 # check if all variables are set
 if(isset($_GET['file'])) {
-	
+
 	$file = removerelativepath($_GET['file']);
 
 	// check that this file is safe to access
@@ -31,10 +31,10 @@ if(isset($_GET['file'])) {
 	$filesafe = filepath_is_safe($file,GSDATAUPLOADPATH);      // check for uploads
 
 	if(!($filesafe || $archivesafe)) die(i18n('NOT_ALLOWED')); // file specified is non existant or LFI! WE DIE
-	
+
 	$extention = getFileExtension($file);
 	header("Content-disposition: attachment; filename=".$file);
-	
+
 	# set content headers
 	if ($extention == 'zip') {
 	  header("Content-type: application/octet-stream");
@@ -54,18 +54,18 @@ if(isset($_GET['file'])) {
 		header("Content-type: text/pdf");
 	} elseif ($extention == 'css' ) {
 		header("Content-type: text/css");
-	} 
-	
+	}
+
 	# plugin hook
 	exec_action('download-file'); // @hook download-file downloading an archive backup
-	
+
 	# get file
 	// debugLog(ob_get_level()); // check buffering level for memory issues
 	if (file_exists($file)) {
-		readfile($file, 'r');
+		readfile($file);
 	}
 	exit;
-	
+
 } else {
 	echo 'No such file found';
 	die;
