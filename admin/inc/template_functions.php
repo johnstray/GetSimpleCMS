@@ -320,7 +320,7 @@ function delete_cache()
  *
  * @since  3.4
  * @param  string $filepath filepath to get backup path
- * @return string converted to backup filepath
+ * @return string|false Backup filepath, or false for an invalid data path.
  */
 function getBackupFilePath($filepath)
 {
@@ -402,6 +402,10 @@ function restore_datafile($filepath, $delete = true)
         return false;
     }
 
+    if (!$delete) {
+        return copy_file($backup, $filepath);
+    }
+
     // Preserve the existing undo behaviour: save the current version.
     if (file_exists($filepath)) {
         $temporary = $backup . '.tmp';
@@ -424,7 +428,7 @@ function restore_datafile($filepath, $delete = true)
         $backup = $temporary;
     }
 
-    return $delete ? move_file($backup, $filepath) : copy_file($backup, $filepath);
+    return move_file($backup, $filepath);
 }
 
 /**
