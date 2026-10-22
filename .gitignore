@@ -1,11 +1,51 @@
-# Local dev or ide stuff
+# Local development and editor files
 *.project
 *.settings
 *.sublime-*
 *.orig
 /lib
-
+/.vscode/
+/.idea/
+Thumbs.db
 thumbs.db
 .DS_*
 
+# Installed dependencies; keep composer.json and composer.lock in the distribution
 /vendor/
+
+# Local configuration and credentials; keep temp.gsconfig.php and temp.htaccess
+/gsconfig.php
+/.htaccess
+/.env
+/.env.*
+!/.env.example
+/.aws/
+/auth.json
+
+# Generated site data. Keep only the files shipped with a clean installation.
+/data/**
+!/data/**/
+!/data/.htaccess
+!/data/cache/.gskeep
+!/data/other/.gskeep
+!/data/pages/.gskeep
+!/data/users/.gskeep
+!/data/thumbs/.htaccess
+!/data/thumbs/index.php
+!/data/thumbs/thumbnail.logo.png
+!/data/thumbs/thumbsm.logo.png
+!/data/uploads/.htaccess
+!/data/uploads/index.php
+!/data/uploads/logo.png
+
+# Site backups; retain distribution access protection and placeholders
+/backups/**
+!/backups/**/
+!/backups/.htaccess
+!/backups/other/.gskeep
+!/backups/pages/.gskeep
+!/backups/zip/.gskeep
+
+# Generated sitemap (admin/inc/tmp contains tracked installer templates)
+/sitemap.xml
+/sitemap.xml.gz

@@ -39,7 +39,7 @@ Please see: http://getsimple.info/docs/installation
 
 #### Requirements
 
-- PHP version 7.4 or later
+- PHP version 8.3 or later
 - PHP Extensions: SimpleXML, xml, json, dom, curl, gd
 - Apache Web Server - Required for out of the box security using .htaccess
 
@@ -47,7 +47,7 @@ Please see: http://getsimple.info/docs/installation
 
 ## Contributions
 Everyone is welcome to make suggestions on how this plugin can be improved by either submitting an issue or a pull-request.
-If you would like to contribute to this project, please first have a read of the [CONTRIBUTING.md](Contributing Guidelines).
+If you would like to contribute to this project, please first have a read of the [contribution guidelines](.github/CONTRIBUTING.md).
 
 ## License
 This project is licensed under the terms of the GNU General Public Licence v3 (or later).
@@ -58,7 +58,7 @@ It would be great if you would link back to get-simple.info if you use it.
 
 ## DISCLAIMER
 
-While GetSimple strives to be a secure and stable application, we simply cannot be held liable for any information loss, corruption or anything else that may happen to your site while it is using the our software. 
+While GetSimple strives to be a secure and stable application, we simply cannot be held liable for any information loss, corruption or anything else that may happen to your site while it is using the our software.
 
 If you find a bug or security hole, please contact someone in the forums at http://forums.getsimple.info/
 
@@ -67,60 +67,59 @@ If you find a bug or security hole, please contact someone in the forums at http
 
 ### TEAM ###
 
-Founder / Creator: Chris Cagle  
-Forum Handle: ccagle8  
-Site: http://get-simple.info/forums/member.php?action=profile&uid=3  
-Twitter: @ccagle8  
-Location: Pittsburgh, Pennsylvania, USA  
+Current Lead Developer: John Stray
+Location: Alice Springs, Australia
 
-Lead Developer: Shawn Alverson  
-Forum Handle: shawn_a  
-Site: http://get-simple.info/forums/member.php?action=profile&uid=1878  
-Location: Tennessee, USA  
+Founder / Creator: Chris Cagle
+Twitter: @ccagle8
+Location: Pittsburgh, Pennsylvania, USA
+
+Former Lead Developer: Shawn Alverson
+Location: Tennessee, USA
 
 
 ### THANKS ###
 
-Mike Swan (n00dles)  
-Carlos Navarro (cnb)  
-Joshas  
-Connie Connie Müller-Gödecke (Connie)  
-Thorsten Panknin (polyfragmented)  
-Mike Henken (MikeH)  
-Martijn van der Ven (Zegnåt)  
-...and the countless others on the forums and SVN that help us make this amazing product possible.  
+Mike Swan (n00dles)
+Carlos Navarro (cnb)
+Joshas
+Connie Connie Müller-Gödecke (Connie)
+Thorsten Panknin (polyfragmented)
+Mike Henken (MikeH)
+Martijn van der Ven (Zegnåt)
+...and the countless others on the forums and SVN that help us make this amazing product possible.
 
 
 ## Libraries
 
 _company logos in the icons are copyright of their respective owners_
 
-Vector Social Media Icons  
-http://icondock.com/free/vector-social-media-icons  
+Vector Social Media Icons
+http://icondock.com/free/vector-social-media-icons
 
-Ckeditor  
+Ckeditor
 http://ckeditor.com/
 
-jcrop  
+jcrop
 http://deepliquid.com/content/Jcrop.html
 
-marijnh/CodeMirror  
+marijnh/CodeMirror
 http://codemirror.net/
 
-fancybox  
+fancybox
 https://github.com/fancyapps/fancyBox
 
-rgrove/lazyload  
+rgrove/lazyload
 https://github.com/rgrove/lazyload
 
-enyo/dropzone  
+enyo/dropzone
 https://github.com/enyo/dropzone
 
-fontawesome  
+fontawesome
 http://fontawesome.io/
 
-bigspotteddog/scrolltofixed  
+bigspotteddog/scrolltofixed
 https://github.com/bigspotteddog/ScrollToFixed
 
-dropzonejs  
+dropzonejs
 http://www.dropzonejs.com/

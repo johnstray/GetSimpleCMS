@@ -1,4 +1,4 @@
-## Major Changes of version 4.0
+## Major Changes of version 3.5.0
 
 _document in progress, each point will be annotated with specifics and details to be used as source for  actual documentation_
 
@@ -29,4 +29,3 @@ _document in progress, each point will be annotated with specifics and details t
 ### General Backend Customization
 
 * Insert changes here...
-

@@ -1,0 +1,48 @@
+name: Bug report
+description: Report a reproducible bug in this GetSimple CMS fork
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report bugs for johnstray/GetSimpleCMS here. Search existing issues first.
+        For suspected vulnerabilities, email github@johnstray.id.au privately.
+        Remove credentials, user data, and authentication salts from all examples.
+  - type: input
+    id: version
+    attributes:
+      label: Fork version or commit
+      description: Include the release version or full commit SHA you tested.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include PHP version, web server, operating system, browser (for UI issues), and active plugins and theme.
+    validations:
+      required: true
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Expected and actual behaviour
+      description: Describe what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Give numbered steps and say whether this occurs on a clean installation of this fork.
+      placeholder: |
+        1. Install this fork at version or commit ...
+        2. ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional information
+      description: Include sanitised logs or screenshots if helpful. Do not upload site backups, user XML, authorization XML, or private configuration.
