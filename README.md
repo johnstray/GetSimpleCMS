@@ -52,41 +52,41 @@ If you would like to contribute to this project, please first have a read of the
 ## License
 This project is licensed under the terms of the GNU General Public Licence v3 (or later).
 
-This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistrbute it and monify it under certain conditions. See [LICENCE.txt](LICENCE) for details.
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistrbute it and monify it under certain conditions. See [LICENCE.txt](LICENCE.txt) for details.
 
-It would be great if you would link back to get-simple.info if you use it.
+It would be great if you would link back to getsimple.info if you use it.
 
 ## DISCLAIMER
 
 While GetSimple strives to be a secure and stable application, we simply cannot be held liable for any information loss, corruption or anything else that may happen to your site while it is using the our software.
 
-If you find a bug or security hole, please contact someone in the forums at http://forums.getsimple.info/
+If you find a bug, file an issue on the GitHub repository; for security issues, send an email to github@johnstray.id.au.
 
 
 ## Credits
 
 ### TEAM ###
 
-Current Lead Developer: John Stray  
+Current Lead Developer: John Stray
 Location: Alice Springs, Australia
 
-Founder / Creator: Chris Cagle  
-Twitter: @ccagle8  
+Founder / Creator: Chris Cagle
+Twitter: @ccagle8
 Location: Pittsburgh, Pennsylvania, USA
 
-Former Lead Developer: Shawn Alverson  
+Former Lead Developer: Shawn Alverson
 Location: Tennessee, USA
 
 
 ### THANKS ###
 
-Mike Swan (n00dles)  
-Carlos Navarro (cnb)  
-Joshas  
-Connie Connie Müller-Gödecke (Connie)  
-Thorsten Panknin (polyfragmented)  
-Mike Henken (MikeH)  
-Martijn van der Ven (Zegnåt)  
+Mike Swan (n00dles)
+Carlos Navarro (cnb)
+Joshas
+Connie Connie Müller-Gödecke (Connie)
+Thorsten Panknin (polyfragmented)
+Mike Henken (MikeH)
+Martijn van der Ven (Zegnåt)
 ...and the countless others on the forums and SVN that help us make this amazing product possible.
 
 
@@ -94,32 +94,32 @@ Martijn van der Ven (Zegnåt)
 
 _company logos in the icons are copyright of their respective owners_
 
-Vector Social Media Icons  
+Vector Social Media Icons
 http://icondock.com/free/vector-social-media-icons
 
-Ckeditor  
+Ckeditor
 http://ckeditor.com/
 
-jcrop  
+jcrop
 http://deepliquid.com/content/Jcrop.html
 
-marijnh/CodeMirror  
+marijnh/CodeMirror
 http://codemirror.net/
 
-fancybox  
+fancybox
 https://github.com/fancyapps/fancyBox
 
-rgrove/lazyload  
+rgrove/lazyload
 https://github.com/rgrove/lazyload
 
-enyo/dropzone  
+enyo/dropzone
 https://github.com/enyo/dropzone
 
-fontawesome  
+fontawesome
 http://fontawesome.io/
 
-bigspotteddog/scrolltofixed  
+bigspotteddog/scrolltofixed
 https://github.com/bigspotteddog/ScrollToFixed
 
-dropzonejs  
+dropzonejs
 http://www.dropzonejs.com/
