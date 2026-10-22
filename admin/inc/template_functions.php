@@ -180,21 +180,45 @@ function delete_logfile($id)
  * @param  string $path Path to uploaded file folder
  * @return bool success
  */
-function delete_upload($id, $path = "")
+function delete_upload($id, $path = '')
 {
-    $filepath = GSDATAUPLOADPATH . $path;
-    $file =  $filepath . $id;
-
-    if (path_is_safe($filepath, GSDATAUPLOADPATH) && filepath_is_safe($file, $filepath)) {
-        $status = delete_file(GSDATAUPLOADPATH . $path . $id);
-        if (file_exists(GSTHUMBNAILPATH.$path."thumbnail.". $id)) {
-            delete_file(GSTHUMBNAILPATH.$path."thumbnail.". $id);
-        }
-        if (file_exists(GSTHUMBNAILPATH.$path."thumbsm.". $id)) {
-            delete_file(GSTHUMBNAILPATH.$path."thumbsm.". $id);
-        }
-        return $status;
+    if (
+        !is_string($id) || $id === '' || basename($id) !== $id
+        || strpbrk($id, "/\\:\0") !== false
+        || !is_string($path) || strpos($path, "\0") !== false
+    ) {
+        return false;
     }
+
+    $path = tsl($path);
+    $file = GSDATAUPLOADPATH . $path . $id;
+    if (!filepath_is_safe($file, GSDATAUPLOADPATH)) {
+        return false;
+    }
+
+    $thumbnails = array();
+    foreach (array('thumbnail.', 'thumbsm.') as $prefix) {
+        $thumbnail = GSTHUMBNAILPATH . $path . $prefix . $id;
+        if (!file_exists($thumbnail) && !is_link($thumbnail)) {
+            continue;
+        }
+        if (!filepath_is_safe($thumbnail, GSTHUMBNAILPATH)) {
+            return false;
+        }
+        $thumbnails[] = $thumbnail;
+    }
+
+    if (!delete_file($file)) {
+        return false;
+    }
+
+    foreach ($thumbnails as $thumbnail) {
+        if (!delete_file($thumbnail)) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
@@ -209,16 +233,60 @@ function delete_upload($id, $path = "")
  */
 function delete_upload_dir($path)
 {
-    $target = GSDATAUPLOADPATH . $path;
-    if (path_is_safe($target, GSDATAUPLOADPATH) && file_exists($target)) {
-        $status = delete_folder($target);
+    if (!is_string($path) || strpos($path, "\0") !== false) {
+        return false;
+    }
 
-        // delete thumbs folder
-        if (file_exists(GSTHUMBNAILPATH . $path)) { delete_dir(GSTHUMBNAILPATH . $path);
+    $target = rtrim(GSDATAUPLOADPATH . $path, '/\\');
+    if (
+        !is_dir($target) || is_link($target)
+        || !path_is_safe($target, GSDATAUPLOADPATH)
+        || path_is_safe($target, GSDATAUPLOADPATH, false)
+    ) {
+        return false;
+    }
+
+    $entries = scandir($target);
+    if ($entries === false || array_diff($entries, array('.', '..'))) {
+        return false;
+    }
+
+    $thumbFolder = rtrim(GSTHUMBNAILPATH . $path, '/\\');
+    if (file_exists($thumbFolder) || is_link($thumbFolder)) {
+        if (
+            !is_dir($thumbFolder) || is_link($thumbFolder)
+            || !path_is_safe($thumbFolder, GSTHUMBNAILPATH)
+            || path_is_safe($thumbFolder, GSTHUMBNAILPATH, false)
+        ) {
+            return false;
         }
 
-        return $status;
+        $entries = scandir($thumbFolder);
+        if ($entries === false) {
+            return false;
+        }
+
+        $thumbnails = array();
+        foreach (array_diff($entries, array('.', '..')) as $entry) {
+            $thumbnail = $thumbFolder . DIRECTORY_SEPARATOR . $entry;
+            if (is_link($thumbnail) || !filepath_is_safe($thumbnail, GSTHUMBNAILPATH)) {
+                return false;
+            }
+            $thumbnails[] = $thumbnail;
+        }
+
+        foreach ($thumbnails as $thumbnail) {
+            if (!delete_file($thumbnail)) {
+                return false;
+            }
+        }
+
+        if (!delete_folder($thumbFolder)) {
+            return false;
+        }
     }
+
+    return delete_folder($target);
 }
 
 /**
@@ -251,19 +319,26 @@ function delete_cache()
  * gets the backup filepath for a data file
  *
  * @since  3.4
- * @param  str $filepath filepath to get backup path
- * @return str           converted to backup filepath
+ * @param  string $filepath filepath to get backup path
+ * @return string converted to backup filepath
  */
 function getBackupFilePath($filepath)
 {
-    $pathparts = pathinfo($filepath);
-    $filename  = $pathparts['filename'];
-    $fileext   = $pathparts['extension'];
-    $dirname   = $pathparts['dirname'];
-    $bakpath   = getRelPath($dirname, GSDATAPATH);
-    $bakfilepath = GSBACKUPSPATH . $bakpath . '/' . getBackupName($filename, $fileext);
-    // debugLog(get_defined_vars());
-    return $bakfilepath;
+    if (!filepath_is_safe($filepath, GSDATAPATH, true, true)) {
+        return false;
+    }
+
+    $root = realpath(GSDATAPATH);
+    $parent = realpath(dirname($filepath));
+    $relative = ltrim(
+        substr($parent, strlen(rtrim($root, DIRECTORY_SEPARATOR))),
+        DIRECTORY_SEPARATOR
+    );
+    $parts = pathinfo($filepath);
+
+    return GSBACKUPSPATH
+        . ($relative !== '' ? $relative . DIRECTORY_SEPARATOR : '')
+        . getBackupName($parts['filename'], $parts['extension'] ?? '');
 }
 
 function getBackupName($filename, $fileext)
@@ -289,14 +364,20 @@ function getPWDresetName($filename, $fileext)
  */
 function backup_datafile($filepath)
 {
-    if (!filepath_is_safe($filepath, GSDATAPATH)) { return false;
+    if (!filepath_is_safe($filepath, GSDATAPATH)) {
+        return false;
     }
 
-    $bakfilepath = getBackupFilePath($filepath);
-    $bakpath = dirname($bakfilepath);
-     // recusive create dirs
-    create_dir($bakpath, getDef('GSCHMODDIR'), true);
-    return copy_file($filepath, $bakfilepath);
+    $backup = getBackupFilePath($filepath);
+    if (
+        $backup === false
+        || !create_safe_directory(dirname($backup), GSBACKUPSPATH)
+        || !filepath_is_safe($backup, GSBACKUPSPATH, true, true)
+    ) {
+        return false;
+    }
+
+    return copy_file($filepath, $backup);
 }
 
 /**
@@ -308,28 +389,47 @@ function backup_datafile($filepath)
  * @param  bool   $delete delete the backup
  * @return bool success
  */
-function restore_datafile($filepath,$delete = true)
+function restore_datafile($filepath, $delete = true)
 {
-    $bakfilepath = getBackupFilePath($filepath);
-
-    if (!filepath_is_safe($bakfilepath, GSBACKUPSPATH)) { return false;
+    if (!filepath_is_safe($filepath, GSDATAPATH, true, true) || is_link($filepath)) {
+        return false;
     }
 
-    // backup original before restoring
+    $backup = getBackupFilePath($filepath);
+    if ($backup === false || !filepath_is_safe($backup, GSBACKUPSPATH)
+        || is_link($backup)
+    ) {
+        return false;
+    }
+
+    // Preserve the existing undo behaviour: save the current version.
     if (file_exists($filepath)) {
-        rename_file($bakfilepath, $bakfilepath.'.tmp');
-        move_file($filepath, $bakfilepath);
-        $bakfilepath .= '.tmp';
+        $temporary = $backup . '.tmp';
+
+        if (file_exists($temporary) || is_link($temporary)
+            || !filepath_is_safe($temporary, GSBACKUPSPATH, true, true)
+        ) {
+            return false;
+        }
+
+        if (!rename_file($backup, $temporary)) {
+            return false;
+        }
+
+        if (!move_file($filepath, $backup)) {
+            rename_file($temporary, $backup);
+            return false;
+        }
+
+        $backup = $temporary;
     }
 
-    if (!$delete) { return copy_file($bakfilepath, $filepath);
-    }
-    return move_file($bakfilepath, $filepath);
+    return $delete ? move_file($backup, $filepath) : copy_file($backup, $filepath);
 }
 
 /**
  * Restore From Backup to custom destintation
- * source locked to GSBACKUPSPATH
+ * source locked to GSBACKUPSPATH, destination must be within GSDATAPATH
  *
  * @since 3.4
  *
@@ -337,10 +437,14 @@ function restore_datafile($filepath,$delete = true)
  * @param  string $destination  filepath retore to
  * @return bool success
  */
-function restore_backup($bakfilepath,$destination)
+function restore_backup($bakfilepath, $destination)
 {
-    if (!filepath_is_safe($bakfilepath, GSBACKUPSPATH)) { return false;
+    if (!filepath_is_safe($bakfilepath, GSBACKUPSPATH)
+        || !filepath_is_safe($destination, GSDATAPATH, true, true)
+    ) {
+        return false;
     }
+
     return copy_file($bakfilepath, $destination);
 }
 
@@ -2638,12 +2742,47 @@ function generate_thumbnail($file, $sub_path = '', $out_file = null, $w = null, 
     if(!in_arrayi('gd', $php_modules)) { return false;
     }
 
-    $sub_path      = tsl($sub_path);
-    $upload_folder = GSDATAUPLOADPATH.$sub_path;
-    $thumb_folder  = GSTHUMBNAILPATH.$sub_path;
-    $thumb_file    = isset($out_file) && !empty($out_file) ? $thumb_folder.$out_file : '';
+        if (!is_string($file) || $file === '' || basename($file) !== $file
+        || strpbrk($file, "/\\:\0") !== false
+        || !is_string($sub_path) || strpos($sub_path, "\0") !== false
+    ) {
+        return false;
+    }
 
-    create_dir($thumb_folder);
+    if ($out_file === '') {
+        $out_file = null;
+    }
+
+    if ($out_file !== null && (!is_string($out_file)
+        || basename($out_file) !== $out_file
+        || strpbrk($out_file, "/\\:\0") !== false)
+    ) {
+        return false;
+    }
+
+    if ($out_file === null && !$show) {
+        return false;
+    }
+
+    $sub_path = tsl($sub_path);
+    $upload_folder = GSDATAUPLOADPATH . $sub_path;
+    $thumb_folder = GSTHUMBNAILPATH . $sub_path;
+    $thumb_file = '';
+
+    if (!filepath_is_safe($upload_folder . $file, GSDATAUPLOADPATH)) {
+        return false;
+    }
+
+    if ($out_file !== null) {
+        if (!create_safe_directory($thumb_folder, GSTHUMBNAILPATH)) {
+            return false;
+        }
+
+        $thumb_file = $thumb_folder . $out_file;
+        if (!filepath_is_safe($thumb_file, GSTHUMBNAILPATH, true, true)) {
+            return false;
+        }
+    }
 
     include_once 'imagemanipulation.php';
     $objImage = new ImageManipulation($upload_folder.$file);

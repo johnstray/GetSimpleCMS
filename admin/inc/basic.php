@@ -778,7 +778,9 @@ function prepareSlug($slug, $default = 'temp')
 function fileHasBackup($filepath)
 {
     $backupfilepath = getBackupFilePath($filepath);
-    return file_exists($backupfilepath);
+
+    return $backupfilepath !== false
+        && filepath_is_safe($backupfilepath, GSBACKUPSPATH);
 }
 
 /**
@@ -826,6 +828,35 @@ function create_dir($path, $recursive = true)
 }
 
 /**
+ * Create a directory inside an existing allowed root.
+ * Validate each missing component before creating it.
+ */
+function create_safe_directory($path, $root)
+{
+    if (!is_string($path) || $path === '' || strpos($path, "\0") !== false) {
+        return false;
+    }
+
+    if (is_dir($path)) {
+        return path_is_safe($path, $root);
+    }
+
+    $path = rtrim($path, DIRECTORY_SEPARATOR . '/');
+    if ($path === '' || file_exists($path) || is_link($path)) {
+        return false;
+    }
+
+    $parent = dirname($path);
+    if ($parent === $path || !create_safe_directory($parent, $root)
+        || !filepath_is_safe($path, $root, true, true)
+    ) {
+        return false;
+    }
+
+    return create_dir($path, false) && path_is_safe($path, $root);
+}
+
+/**
  * Delete a folder, must be empty
  *
  * @param  str $path path to remove
@@ -851,7 +882,7 @@ function delete_folder($path)
  */
 function save_file($file,$data='')
 {
-    $status = file_put_contents(trim($file), $data) !== false; // returns num bytes written, FALSE on failure
+    $status = file_put_contents($file, $data) !== false; // returns num bytes written, FALSE on failure
     fileLog(__FUNCTION__, $status, $file);
     if(getDef('GSDOCHMOD', true)) { $chmodstatus = gs_chmod($file); // currently ignoring chmod failures
     }
@@ -1558,12 +1589,35 @@ function i18n_merge_impl($plugin, $lang, &$globali18n)
     if(!isset($globali18n)) { $globali18n = array(); //global ref to $i18n
     }
 
-    $path     = (isset($plugin) && $plugin !=='' ? GSPLUGINPATH.$plugin.'/lang/' : GSLANGPATH);
-    $filename = $path.$lang.'.php';
-    $prefix   = $plugin ? $plugin.'/' : '';
+        if (!is_string($lang) || $lang === '' || $lang === '.' || $lang === '..'
+        || strpbrk($lang, "/\\:\0") !== false
+    ) {
+        return false;
+    }
 
-    // @todo being overly safe here since we are direclty including input that can come from anywhere
-    if (!file_exists($filename) || !filepath_is_safe($filename, $path)) {
+    $path = GSLANGPATH;
+    $prefix = '';
+
+    if ($plugin !== null && $plugin !== '') {
+        if (!is_string($plugin) || $plugin === '.' || $plugin === '..'
+            || strpbrk($plugin, "/\\:\0") !== false
+        ) {
+            return false;
+        }
+
+        $pluginPath = GSPLUGINPATH . $plugin;
+        $path = $pluginPath . '/lang/';
+        $prefix = $plugin . '/';
+
+        if (!is_dir($pluginPath) || !path_is_safe($pluginPath, GSPLUGINPATH)
+            || !is_dir($path) || !path_is_safe($path, $pluginPath)
+        ) {
+            return false;
+        }
+    }
+
+    $filename = $path . $lang . '.php';
+    if (!filepath_is_safe($filename, $path, false)) {
         return false;
     }
 

@@ -34,7 +34,7 @@ $file_ext_blacklist = array(
 	# Other types that may be interpreted by some servers
 	'shtml', 'jhtml', 'pl', 'py', 'cgi', 'sh', 'ksh', 'bsh', 'c', 'htaccess', 'htpasswd',
 	# May contain harmful executables for Windows victims
-	'exe', 'scr', 'dll', 'msi', 'vbs', 'bat', 'com', 'pif', 'cmd', 'vxd', 'cpl' 
+	'exe', 'scr', 'dll', 'msi', 'vbs', 'bat', 'com', 'pif', 'cmd', 'vxd', 'cpl'
 );
 
 
@@ -59,7 +59,7 @@ function antixss($str){
 	$str = preg_replace('#<!--.*?-->?#', '', $str);
 	$str = preg_replace('#<!--#', '', $str);
 	$str = preg_replace('#(<[a-z]+(\s+[a-z][a-z\-]+\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*)\s+href\s*=\s*(\'javascript:[^\']*\'|"javascript:[^"]*"|javascript:[^\s>]*)((\s+[a-z][a-z\-]*\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*\s*>)#is', '$1$5', $str);
-	
+
 	foreach($attr as $a) {
 	    $regex = '(<[a-z]+(\s+[a-z][a-z\-]+\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*)\s+'.$a.'\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*)((\s+[a-z][a-z\-]*\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*\s*>)';
 	    $str   = preg_replace('#'.$regex.'#is', '$1$5', $str);
@@ -82,23 +82,23 @@ function xss_clean($data){
 	$data = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $data);
 	$data = preg_replace('/(&#x*[0-9A-F]+);*/iu', '$1;', $data);
 	$data = html_entity_decode($data, ENT_COMPAT, 'UTF-8');
-	
+
 	// Remove any attribute starting with "on" or xmlns
 	$data = preg_replace('#(<[^>]+?[\x00-\x20"\'/])(?:on|xmlns)[^>]*+>#iu', '$1>', $data);
-	
+
 	// Remove javascript: and vbscript: protocols
 	$data = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2nojavascript...', $data);
 	$data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2novbscript...', $data);
 	$data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#u', '$1=$2nomozbinding...', $data);
-	
+
 	// Only works in IE: <span style="width: expression(alert('Ping!'));"></span>
 	$data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?expression[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
 	$data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
 	$data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#iu', '$1>', $data);
-	
+
 	// Remove namespaced elements (we do not need them)
 	$data = preg_replace('#</*\w+:\w[^>]*+>#i', '', $data);
-	
+
 	do
 	{
 		// Remove really unwanted tags
@@ -106,7 +106,7 @@ function xss_clean($data){
 		$data = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $data);
 	}
 	while ($old_data !== $data);
-	
+
 	// we are done...
 	// if($datadirty !== $data) debugLog("string cleaned: removed ". (strlen($datadirty) - strlen($data)) .' chars');
 	return $data;
@@ -150,7 +150,7 @@ function check_for_csrf($action, $file="", $die = true){
  *
  * @param string $action Id of current page
  * @param string $file Optional, default is empty string
- * @param bool $last 
+ * @param bool $last
  * @return string
  */
 function get_nonce($action, $file = "", $last = false) {
@@ -190,7 +190,7 @@ function get_nonce($action, $file = "", $last = false) {
  * @param string $action
  * @param string $file Optional, default is empty string
  * @return bool
- */	
+ */
 function check_nonce($nonce, $action, $file = ""){
 	return ( $nonce === get_nonce($action, $file) || $nonce === get_nonce($action, $file, true) );
 }
@@ -208,7 +208,7 @@ function check_nonce($nonce, $action, $file = ""){
  * @param string $name, filename
  * @param string $mime, optional
  * @return bool
- */	
+ */
 function validate_safe_file($file, $name, $mime = null){
 	global $mime_type_blacklist, $file_ext_blacklist, $mime_type_whitelist, $file_ext_whitelist;
 
@@ -227,55 +227,95 @@ function validate_safe_file($file, $name, $mime = null){
 	if($mime_type_whitelist || $file_ext_whitelist) return false;
 
 	if ($mime && in_arrayi($mime, $mime_type_blacklist)) {
-		return false;	
+		return false;
 	} elseif (in_arrayi($file_extension, $file_ext_blacklist)) {
-		return false;	
+		return false;
 	} else {
-		return true;	
+		return true;
 	}
 }
 
 /**
- * Checks that an existing filepath is safe to use by checking canonicalized absolute pathname.
- * If file does not exist and realpath fails, we realpath dirname() instead
+ * Check an existing file, or a new filename in an existing directory.
  *
- * @since 3.1.3
+ * Symlinks are allowed only when their resolved target remains inside the root.
+ * A missing target is accepted only when $newfile is true.
+ * This checks containment, not allowed extensions or write permissions.
  *
- * @param  string $filepath  Unknown Path to file to check for safety
- * @param  string $pathmatch Known Path to parent folder to check against
- * @param  bool   $subdir    allow path to be a deeper subfolder
- * @param  bool   $newfile   if true fallback and realpath basename, caution, use with other filename sanitizers
- * @return bool Returns true if files path resolves to your known path
+ * @param string $filepath  File path to check.
+ * @param string $pathmatch Allowed parent directory.
+ * @param bool   $subdir    Allow files in descendant directories.
+ * @param bool   $newfile   Allow a missing file in an existing directory.
+ * @return bool
  */
 function filepath_is_safe($filepath, $pathmatch, $subdir = true, $newfile = false)
 {
-    $realpath = realpath($filepath);
-    if(!$realpath && $newfile) { return path_is_safe(dirname($filepath), $pathmatch, $subdir);
+    if (!is_string($filepath) || $filepath === '' || strpos($filepath, "\0") !== false) {
+        return false;
     }
 
-    $realpathmatch = realpath($pathmatch);
-    if($subdir) { return strpos(dirname($realpath), $realpathmatch) === 0;
+    // Constrain the directory entry as well as any symlink target.
+    $parent = dirname($filepath);
+    if (!is_dir($parent) || !path_is_safe($parent, $pathmatch, $subdir)) {
+        return false;
     }
-    return dirname($realpath) == $realpathmatch;
+
+    $realpath = realpath($filepath);
+    if ($realpath !== false) {
+        return is_file($realpath)
+            && path_is_safe(dirname($realpath), $pathmatch, $subdir);
+    }
+
+    // Never treat an unresolved existing entry or dangling link as a new file.
+    if (!$newfile || file_exists($filepath) || is_link($filepath)) {
+        return false;
+    }
+
+    $filename = basename($filepath);
+    if ($filename === '' || $filename === '.' || $filename === '..'
+        || str_ends_with($filepath, '/') || str_ends_with($filepath, '\\')
+        || strpbrk($filename, '\\:') !== false
+        || preg_match('/[\x00-\x1f\x7f]/', $filename)
+        || (DIRECTORY_SEPARATOR === '\\' && rtrim($filename, '. ') !== $filename)
+    ) {
+        return false;
+    }
+
+    return true;
 }
 
 /**
- * Checks that an existing path is safe to use by checking canonicalized absolute path
+ * Check an existing file or directory against an existing allowed directory.
  *
- * @since 3.1.3
+ * The root itself is accepted. With $subdir false, only the root is accepted.
+ * Paths are resolved before comparison, including traversal and symlinks.
  *
- * @param  string $path      Unknown Path to check for safety
- * @param  string $pathmatch Known Path to check against
- * @param  bool   $subdir    allow path to be a deeper subfolder
- * @return bool Returns true if $path is direct subfolder of $pathmatch
+ * @param string $path      Existing path to check.
+ * @param string $pathmatch Allowed directory.
+ * @param bool   $subdir    Allow descendants of the allowed directory.
+ * @return bool
  */
-function path_is_safe($path,$pathmatch,$subdir = true)
+function path_is_safe($path, $pathmatch, $subdir = true)
 {
-    $realpath      = realpath($path);
-    $realpathmatch = realpath($pathmatch);
-    if($subdir) { return strpos($realpath, $realpathmatch) === 0;
+    foreach (array($path, $pathmatch) as $value) {
+        if (!is_string($value) || $value === '' || strpos($value, "\0") !== false) {
+            return false;
+        }
     }
-    return $realpath == $realpathmatch;
+
+    $realpath = realpath($path);
+    $realpathmatch = realpath($pathmatch);
+    if ($realpath === false || $realpathmatch === false || !is_dir($realpathmatch)) {
+        return false;
+    }
+
+    if ($realpath === $realpathmatch) {
+        return true;
+    }
+
+    // Append exactly one separator, including for filesystem roots.
+    $prefix = rtrim($realpathmatch, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    return $subdir && str_starts_with($realpath, $prefix);
 }
 
 // alias to check a subdir easily
@@ -286,7 +326,7 @@ function subpath_is_safe($path,$dir)
 
 /**
  * Check if server is Apache
- * 
+ *
  * @returns bool
  */
 function server_is_apache()
@@ -296,7 +336,7 @@ function server_is_apache()
 
 /**
  * Try to get server_software
- * 
+ *
  * @returns string
  */
 function get_Server_Software()

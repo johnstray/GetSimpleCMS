@@ -25,7 +25,11 @@ if ((isset($_POST['submitted'])) && (isset($_POST['template']))) {
     # get passed value from form
     $newTemplate = var_in($_POST['template']);
 
-    if (!path_is_safe(GSTHEMESPATH . $newTemplate, GSTHEMESPATH)) {
+    $themePath = GSTHEMESPATH . $newTemplate;
+
+    if (!is_dir($themePath) || !path_is_safe($themePath, GSTHEMESPATH)
+        || !filepath_is_safe($themePath . '/' . GSTEMPLATEFILE, $themePath, false)
+    ) {
         die();
     }
 

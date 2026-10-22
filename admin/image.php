@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Images
  *
@@ -47,6 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && ( matchArrayAll(array('x','y','w','h
 	$max = 10000; // set a max to prevent excessive processing injections
 
 	if( $x<$max && $y<$max && $w<$max && $h<$max ){
+        $thumbnail = $thumb_folder . 'thumbnail.' . $src;
+
+        if (!create_safe_directory($thumb_folder, GSTHUMBNAILPATH)
+            || !filepath_is_safe($thumbnail, GSTHUMBNAILPATH, true, true)
+        ) {
+            http_response_code(400);
+            die('Invalid thumbnail destination.');
+        }
 		require_once('inc/imagemanipulation.php');
 		$objImage = new ImageManipulation($src_folder . $subPath .$src);
 		if ( $objImage->imageok ) {
@@ -100,7 +108,7 @@ include('template/include-nav.php'); ?>
 
 <div class="bodycontent clearfix">
 	<div id="maincontent">
-			
+
 		<div class="main">
 		<h3 class="floated"><?php i18n('IMG_CONTROl_PANEL');?><span class="crumbs">
 		<a href="upload.php"><?php echo i18n_r('FILES'); ?></a> / <?php echo  breadcrumbs(var_out($subPath.$src),'upload.php?path=');?></span></h3>
@@ -108,7 +116,7 @@ include('template/include-nav.php'); ?>
 			<?php exec_action(get_filename_id().'-edit-nav'); ?>
 		</div>
 		<?php exec_action(get_filename_id().'-body');
-			
+
 			echo '<div class="thumbs clearfix">';
 
 			echo '<div class="thumbcontainer"><a href="'.$src_url .rawurlencode($src).'" rel="fancybox_i" >';
@@ -121,7 +129,7 @@ include('template/include-nav.php'); ?>
 			echo '<div><img src="'.$thumb_url . 'thumbnail.'. rawurlencode($src).'?'.time().'"></div>';
 			echo i18n_r('CURRENT_THUMBNAIL') .'<br/><code>'.$thwidth.'x'.$thheight .'</code>';
 			echo "</a></div>";
-			
+
 			echo "</div>";
 
 
@@ -149,7 +157,7 @@ include('template/include-nav.php'); ?>
 				<p id="code-imgthumb-html">&lt;a href="<?php echo $src_url. rawurlencode($src); ?>" class="gs_image_link" >&lt;img src="<?php echo $thumb_url.'thumbnail.'.rawurlencode($src); ?>" class="gs_thumb" height="<?php echo $thheight; ?>" width="<?php echo $thwidth; ?>" alt="" />&lt;/a></p>
 				<?php } ?>
 			</div>
-			<?php 
+			<?php
 				exec_action('image-extras'); // @hook image-extras provide extra image features here
 			?>
 	</div>
@@ -157,7 +165,7 @@ include('template/include-nav.php'); ?>
 <?php
 $jcrop = !empty($thumb_exists);
 if($jcrop){ ?>
-	
+
 	<div class="main">
 	<h3 class="floated"><?php i18n('CREATE_THUMBNAIL');?></h3>
 	<div class="clearfix" ></div>
@@ -182,17 +190,17 @@ if($jcrop){ ?>
 	    </form>
 	</div>
 	</div>
-	
+
 <?php } ?>
 	</div>
-	
+
 	<div id="sidebar" >
 		<?php include('template/sidebar-files.php'); ?>
-	</div>	
+	</div>
 
 	<script>
-	  jQuery(document).ready(function() { 
-	    	
+	  jQuery(document).ready(function() {
+
 	  		jcrop_container = $("#cropbox");
 
 			$(window).on('load', function(){
@@ -201,7 +209,7 @@ if($jcrop){ ?>
 					onSelect: updateCoords,
 					onRelease: updateCoordsReset,
 					// onDblClick: jcropDblClick,
-					boxWidth: $('#jcrop_open').width(), 
+					boxWidth: $('#jcrop_open').width(),
 					boxHeight: 800,
 					bgColor: 'black',
 					bgOpacity: 0.3,
@@ -245,7 +253,7 @@ if($jcrop){ ?>
 					if(e.type == 'keydown' && e.keyCode == 27){
 						jcropClear();
 					}
-					
+
 					var options = getOptions();
 
 					if(e.ctrlKey || e.metaKey) {
@@ -256,20 +264,20 @@ if($jcrop){ ?>
 							// jcrop_api.focus(); // probably not needed setoptions reloads the entire thing
 							return;
 						}
-					} 
+					}
 					else {
 						if(options.aspectRatio == 1){
 							// console.log("aspectratio OFF");
 							getApi().setOptions({ aspectRatio: 0 });
 							// api.focus();
-						}							
+						}
 					}
 				});
 
 			});
-		
+
 		});
 	</script>
-	
+
 	</div>
 <?php get_template('footer'); ?>

@@ -1,15 +1,16 @@
 <?php
+
 require 'common.php';
 login_cookie_check();
 
 /**
  * ONLY AVAILABLE IF AUTHENTICATED
- * 
+ *
  * Thumbnail Image Generator
  *
  * REQUIREMENTS:
  * - PHP 4.0.6 and GD 2.0.1 or later
- * - May not work with GIFs if GD2 library installed on your server 
+ * - May not work with GIFs if GD2 library installed on your server
  * - does not support GIF functions in full
  *
  * Parameters:
@@ -22,9 +23,9 @@ login_cookie_check();
  * - f - save to file (1) or output to browser (0).
  * - json - return image in json object including obj info and base64 image
  * - c - crop options, 0 = left/top, 1 = center, 2 = right/bottom ( only maked sense with w=h square images )
- * 
- * Sample usage: 
- * 1. save thumb on server: 
+ *
+ * Sample usage:
+ * 1. save thumb on server:
  * thumb.php?src=test.jpg&dest=thumb.jpg&x=100&y=50
  * 2. output thumb to browser:
  * thumb.php?src=test.jpg&x=50&y=50&f=0
@@ -34,7 +35,7 @@ login_cookie_check();
  * @package GetSimple
  * @subpackage Images
 *  @example http://127.0.0.1/getsimple/admin/inc/thumb.php?src=test/image.jpg&dest=test/thumbsm.image.jpg&f=1&w=80&h=160
- */ 
+ */
 
 // Below are default values (if parameter is not passed)
 
@@ -109,7 +110,7 @@ if (isset($_REQUEST['h'])) {
     $max_y = intval($_REQUEST['h']);
 }
 
-if(isset($_REQUEST['c'])) {
+if (isset($_REQUEST['c'])) {
     $crop = intval($_REQUEST['c']);
 }
 
@@ -130,40 +131,58 @@ $sub_path = tsl(dirname($from_name));
 $outfile  = $save_to_file ? basename($to_name) : null;
 
 // if empty do not resize
-if(empty($max_y)) $max_y = null;
-if(empty($max_x)) $max_x = null;
+if (empty($max_y)) $max_y = null;
+if (empty($max_x)) $max_x = null;
 
 // debugLog($file);
 // debugLog($sub_path);
 // debugLog($outfile);
 
 // travesal protection
-if(!filepath_is_safe(GSDATAUPLOADPATH.$sub_path.$file,GSDATAUPLOADPATH,true)) die('invalid src image');
-if(!path_is_safe(GSTHUMBNAILPATH.dirname($to_name),GSTHUMBNAILPATH,true)) die('invalid dest image');
+if (!filepath_is_safe(GSDATAUPLOADPATH.$sub_path.$file,GSDATAUPLOADPATH,true)) die('invalid src image');
 
 // Debugging Request
-// returns the imagemanipulation object json encoded, 
+// returns the imagemanipulation object json encoded,
 // add base64 encoded image data ['data']
 // add filesize ['bytes']
 // add url to image if it was saved ['url']
-if(isset($_REQUEST['debug']) || isset($_REQUEST['json'])){
+if (isset($_REQUEST['debug']) || isset($_REQUEST['json'])) {
     ob_start();
     // $outfile = null;
 }
 
-// @todo: if needing to save as attachement from post, might need this else second request might be made with post data missing
-// header('Content-Disposition: Attachment;filename='.$outfile);
-$image = generate_thumbnail($file, $sub_path, $outfile, $max_x, $max_y, $crop, $image_quality, $show = true, $image_type);
+// @todo: if needing to save as attachement from post, might need this else second request might be made with
+// post data missing header('Content-Disposition: Attachment;filename='.$outfile);
+$image = generate_thumbnail(
+    $file,
+    $sub_path,
+    $outfile,
+    $max_x,
+    $max_y,
+    $crop,
+    $image_quality,
+    $show = true,
+    $image_type
+);
 
-if(isset($_REQUEST['debug']) || isset($_REQUEST['json'])) {
+if ($image === false) {
+    if (isset($_REQUEST['debug']) || isset($_REQUEST['json'])) {
+        ob_end_clean();
+    }
+
+    http_response_code(400);
+    die('Unable to generate thumbnail.');
+}
+
+if (isset($_REQUEST['debug']) || isset($_REQUEST['json'])) {
     $output = ob_get_contents(); // get the image as a string in a variable
     ob_end_clean(); //Turn off output buffering and clean it
     header("Content-Type: text/json");
-    
+
     // add filesize and base64 encoded image
     $image->image['bytes'] = strlen($output); // size in bytes
     $image->imagedata = base64_encode($output);
-    
+
     // remove resources and filepaths
     unset($image->image['src']);
     unset($image->image['des']);
@@ -173,11 +192,11 @@ if(isset($_REQUEST['debug']) || isset($_REQUEST['json'])) {
     // $image->image['debuglog'] = strip_tags($GS_DEBUG);;
 
     // add url to thumbnail
-    if(isset($image->image['outfile'])) 
+    if (isset($image->image['outfile'])) {
         $image->image['thumb_url'] = getThumbnailURI($outfile,$sub_path,'');
-    
+    }
     // echo "<pre>",print_r($image->image,true),"</pre>";
-    
+
     // json encode
     echo json_encode($image);
 }
