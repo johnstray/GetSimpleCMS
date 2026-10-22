@@ -67,26 +67,26 @@ If you find a bug or security hole, please contact someone in the forums at http
 
 ### TEAM ###
 
-Current Lead Developer: John Stray
+Current Lead Developer: John Stray  
 Location: Alice Springs, Australia
 
-Founder / Creator: Chris Cagle
-Twitter: @ccagle8
+Founder / Creator: Chris Cagle  
+Twitter: @ccagle8  
 Location: Pittsburgh, Pennsylvania, USA
 
-Former Lead Developer: Shawn Alverson
+Former Lead Developer: Shawn Alverson  
 Location: Tennessee, USA
 
 
 ### THANKS ###
 
-Mike Swan (n00dles)
-Carlos Navarro (cnb)
-Joshas
-Connie Connie Müller-Gödecke (Connie)
-Thorsten Panknin (polyfragmented)
-Mike Henken (MikeH)
-Martijn van der Ven (Zegnåt)
+Mike Swan (n00dles)  
+Carlos Navarro (cnb)  
+Joshas  
+Connie Connie Müller-Gödecke (Connie)  
+Thorsten Panknin (polyfragmented)  
+Mike Henken (MikeH)  
+Martijn van der Ven (Zegnåt)  
 ...and the countless others on the forums and SVN that help us make this amazing product possible.
 
 
@@ -94,32 +94,32 @@ Martijn van der Ven (Zegnåt)
 
 _company logos in the icons are copyright of their respective owners_
 
-Vector Social Media Icons
+Vector Social Media Icons  
 http://icondock.com/free/vector-social-media-icons
 
-Ckeditor
+Ckeditor  
 http://ckeditor.com/
 
-jcrop
+jcrop  
 http://deepliquid.com/content/Jcrop.html
 
-marijnh/CodeMirror
+marijnh/CodeMirror  
 http://codemirror.net/
 
-fancybox
+fancybox  
 https://github.com/fancyapps/fancyBox
 
-rgrove/lazyload
+rgrove/lazyload  
 https://github.com/rgrove/lazyload
 
-enyo/dropzone
+enyo/dropzone  
 https://github.com/enyo/dropzone
 
-fontawesome
+fontawesome  
 http://fontawesome.io/
 
-bigspotteddog/scrolltofixed
+bigspotteddog/scrolltofixed  
 https://github.com/bigspotteddog/ScrollToFixed
 
-dropzonejs
+dropzonejs  
 http://www.dropzonejs.com/
