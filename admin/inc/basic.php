@@ -936,7 +936,7 @@ function copy_file($src,$dest,$filename = null)
  * @param  string $file file to delete
  * @return bool       success
  */
-function delete_file((string) $file)
+function delete_file(string $file)
 {
     $status = unlink($file); // php unlink
     return fileLog(__FUNCTION__, $status, $file);
